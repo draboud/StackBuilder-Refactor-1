@@ -233,6 +233,7 @@
   var controlButtonsView_default = new controlButtonsView();
 
   // src/js/controller.js
+  console.log("BRANCH: retarget from view");
   var controlCompButtons = function(compButtonClickedName) {
     switch (compButtonClickedName) {
       case "plus":
