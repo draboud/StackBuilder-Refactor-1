@@ -30,6 +30,7 @@ async function build() {
       entryPoints: entryPoints,
       outdir: outDir,
       bundle: true,
+      minify: true,
       platform: "browser",
       format: "esm",
       splitting: true,
