@@ -27,7 +27,7 @@ async function build() {
 
   try {
     await esbuild.build({
-      entryPoints: entryPoints,
+      entryPoints: ["src/js/controller.js"],
       outdir: outDir,
       bundle: true,
       minify: true,
