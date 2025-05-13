@@ -1,0 +1,18 @@
+{
+  "name": "stackbuilder-refactor-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/js/controller.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "serve",
+    "build": "esbuild src/js/controller.js --bundle --outfile=dist/controller.js --watch",
+    "build-by-file": "node builder.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "^0.25.4",
+    "serve": "^14.2.4"
+  }
+}
