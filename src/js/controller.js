@@ -4,8 +4,6 @@ import stackView from "./views/stackView.js";
 import controlButtonsView from "./views/controlButtonsView.js";
 import { GET_COMP } from "./helpers.js";
 
-console.log("test build");
-
 const controlCompButtons = function (compButtonClickedName) {
   switch (compButtonClickedName) {
     case "plus":
