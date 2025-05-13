@@ -18,7 +18,7 @@ class stackView extends View {
   }
   //_________________________________________________________________________
   //add active class to comp block via state's active id
-  _activateCompBlock() {
+  _setActiveCompBlock() {
     this._retarget(ACTIVE_COMP_BLOCK);
     document.querySelectorAll(".comp-div").forEach((el) => {
       el.classList.remove("active");
@@ -41,6 +41,11 @@ class stackView extends View {
       "beforebegin",
       _generateMarkup(ACTIVE_COMP_BLOCK, this._activeStateComp)
     );
+  }
+  //_________________________________________________________________________
+  //add comp block via state's active id
+  _deleteCompBlock() {
+    // this.
   }
   //_________________________________________________________________________
 }

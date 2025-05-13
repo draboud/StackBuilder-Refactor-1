@@ -11,7 +11,7 @@ const controlCompButtons = function (compButtonClickedName) {
     case "plus":
       model._addStateComp();
       stackView._addCompBlock();
-      stackView._activateCompBlock();
+      stackView._setActiveCompBlock();
       break;
     case "minus":
       // model._removeStateComp();
@@ -24,8 +24,8 @@ const controlCompButtons = function (compButtonClickedName) {
 };
 
 const controlCompClick = function (compClickedId) {
-  model._activateStateComp(compClickedId);
-  stackView._activateCompBlock(model.state);
+  model._setActiveStateComp(compClickedId);
+  stackView._setActiveCompBlock(model.state);
 };
 
 const init = function () {
@@ -39,8 +39,8 @@ const init = function () {
   });
 
   //start with base comp block active and fed into model.state, then activate base comp block
-  model._activateStateComp("c-1");
-  stackView._activateCompBlock();
+  model._setActiveStateComp("c-1");
+  stackView._setActiveCompBlock();
   //set handler functions
   compButtonsView._addHandlerCompButtons(controlCompButtons);
   stackView._addHandlerCompClick(controlCompClick);

@@ -22,7 +22,7 @@ export let state = {
   ],
 };
 
-export const _activateStateComp = function (id) {
+export const _setActiveStateComp = function (id) {
   state.stateCompsArray.forEach((el) => {
     el.active = false;
   });
@@ -58,7 +58,7 @@ export const _addStateComp = function () {
   };
   state.stateCompsArray.splice(_activeIndex, 0, newStateComp);
   _retarget(ACTIVE_INDEX, newStateComp.id);
-  _activateStateComp(newStateComp.id);
+  _setActiveStateComp(newStateComp.id);
   _resetStateCompIds();
   state.activeId = _activeStateComp.id;
 };

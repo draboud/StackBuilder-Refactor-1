@@ -75,7 +75,7 @@
       }
     ]
   };
-  var _activateStateComp = function(id) {
+  var _setActiveStateComp = function(id) {
     state.stateCompsArray.forEach((el) => {
       el.active = false;
     });
@@ -108,7 +108,7 @@
     };
     state.stateCompsArray.splice(_activeIndex, 0, newStateComp);
     _retarget(ACTIVE_INDEX, newStateComp.id);
-    _activateStateComp(newStateComp.id);
+    _setActiveStateComp(newStateComp.id);
     _resetStateCompIds();
     state.activeId = _activeStateComp.id;
   };
@@ -182,7 +182,7 @@
     }
     //_________________________________________________________________________
     //add active class to comp block via state's active id
-    _activateCompBlock() {
+    _setActiveCompBlock() {
       this._retarget(ACTIVE_COMP_BLOCK);
       document.querySelectorAll(".comp-div").forEach((el) => {
         el.classList.remove("active");
@@ -206,6 +206,10 @@
       );
     }
     //_________________________________________________________________________
+    //add comp block via state's active id
+    _deleteCompBlock() {
+    }
+    //_________________________________________________________________________
   };
   var stackView_default = new stackView2();
 
@@ -226,7 +230,7 @@
       case "plus":
         _addStateComp();
         stackView_default._addCompBlock();
-        stackView_default._activateCompBlock();
+        stackView_default._setActiveCompBlock();
         break;
       case "minus":
         break;
@@ -237,8 +241,8 @@
     }
   };
   var controlCompClick = function(compClickedId) {
-    _activateStateComp(compClickedId);
-    stackView_default._activateCompBlock(state);
+    _setActiveStateComp(compClickedId);
+    stackView_default._setActiveCompBlock(state);
   };
   var init = function() {
     const testBtn = document.querySelector(".test_button");
@@ -249,8 +253,8 @@
         console.log(el);
       });
     });
-    _activateStateComp("c-1");
-    stackView_default._activateCompBlock();
+    _setActiveStateComp("c-1");
+    stackView_default._setActiveCompBlock();
     compButtonsView_default._addHandlerCompButtons(controlCompButtons);
     stackView_default._addHandlerCompClick(controlCompClick);
   };
