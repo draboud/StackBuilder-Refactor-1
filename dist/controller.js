@@ -1,204 +1,15 @@
-(() => {
-  // src/js/config.js
-  var COMP_IMG = {
-    blank: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s-p-500.png",
-    side: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png",
-    spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a5fa6e4d52fd0b3de57a9_3D-spl.png",
-    man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a5fa6725b057559cbf6aa_3D-man.png",
-    hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a5fa6f13b04fef09ca675_3D-hyd.png",
-    adaptor: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a74027217473126aea363_3D-dsa.png",
-    single: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6ec4b8b91a31aa5abe_3D-single.png",
-    cross: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6e1a63013f513c6d6b_3D-cross.png",
-    cross_limit: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a776323e23acebce2481d_3D-cross-limit.png",
-    bell_nipple: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a69c604d50a77f5517d85_3D-bell-nipple.png",
-    gate_valve: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6f7172a37aa03166a1_3D-gate-valve.png",
-    washington: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6e03fa1f13aafbc392_3D-washington.png",
-    wellhead: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a5fa60fc8656bfb6db500_3D-wellhead.png",
-    annular: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a68e44adb1f08dc09b296_3D-annular.png",
-    spool: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6e7e501610bd690378_3D-spool.png",
-    double: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6ed57c9634eecf5172_3D-double.png"
-  };
-
-  // src/js/model.js
-  var _idCount = 1;
-  var _stateComptoActivate;
-  var _activeStateComp;
-  var _activeIndex;
-  var STATE_COMP_TO_ACTIVATE = "_stateCompToActivate";
-  var ACTIVE_STATE_COMP = "_activeStateComp";
-  var ACTIVE_INDEX = "_activeIndex";
-  var state = {
-    activeId: "c-1",
-    stateCompsArray: [
-      {
-        active: true,
-        id: `c-${_idCount}`,
-        image: COMP_IMG.blank,
-        height: 0,
-        options: {}
-      }
-    ]
-  };
-  var _activateStateComp = function(id) {
-    state.stateCompsArray.forEach((el) => {
-      el.active = false;
-    });
-    _retarget(STATE_COMP_TO_ACTIVATE, id);
-    _stateComptoActivate.active = true;
-    state.activeId = id;
-  };
-  var _configActiveStateComp = function(compType) {
-    _retarget(ACTIVE_STATE_COMP, state.activeId);
-    _activeStateComp.image = COMP_IMG[compType];
-    _activeStateComp.options = {};
-  };
-  var _resetStateCompIds = function() {
-    _idCount = 1;
-    for (let i = state.stateCompsArray.length - 1; i > 0; i--) {
-      state.stateCompsArray[i].id = `c-${_idCount}`;
-      _idCount++;
-    }
-    _retarget(ACTIVE_STATE_COMP);
-    state.activeId = _activeStateComp.id;
-  };
-  var _addStateComp = function() {
-    _idCount++;
-    const newStateComp = {
-      active: true,
-      id: `c-${_idCount}`,
-      image: COMP_IMG.blank,
-      height: 0,
-      options: {}
-    };
-    state.stateCompsArray.splice(_activeIndex, 0, newStateComp);
-    _retarget(ACTIVE_INDEX, newStateComp.id);
-    _activateStateComp(newStateComp.id);
-    _resetStateCompIds();
-    state.activeId = _activeStateComp.id;
-  };
-  var _retarget = function(stateCompEl, id) {
-    switch (stateCompEl) {
-      case "_stateCompToActivate":
-        _stateComptoActivate = state.stateCompsArray.find((el) => el.id === id);
-        break;
-      case "_activeStateComp":
-        if (id) {
-          _activeStateComp = state.stateCompsArray.find((el) => el.id === id);
-        } else {
-          _activeStateComp = state.stateCompsArray.find(
-            (el) => el.active = true
-          );
-        }
-        break;
-      case "_activeIndex":
-        _activeIndex = state.stateCompsArray.indexOf(
-          state.stateCompsArray.find((el) => el.id === id)
-        );
-        break;
-    }
-  };
-
-  // src/js/views/View.js
-  var View = class {
-    _data;
-    _activeStateComp;
-    _activeCompBlock;
-    // _retarget = function (comp, id) {
-    //   switch (comp){
-    //     case _activateStateComp
-    //   }
-    //   _activateStateComp = stateData.stateCompsArray.find(
-    //     (el) => el.id === stateData.activeId
-    //   );
-    // };
-  };
-
-  // src/js/views/compButtonsView.js
-  var compButtonsView = class extends View {
-    _parentElement = document.querySelector(".vert_buttons_div");
-    _addHandlerCompButtons(handler) {
-      this._parentElement.addEventListener("click", function(e) {
-        const compButtonClicked = e.target.closest(".comp_button").className.split(" ")[1];
-        if (!compButtonClicked) return;
-        handler(compButtonClicked);
-      });
-    }
-  };
-  var compButtonsView_default = new compButtonsView();
-
-  // src/js/views/stackView.js
-  var stackView2 = class _stackView extends View {
-    // _data;
-    _parentElement = document.querySelector(".comp-wrapper");
-    //click events for all comp blocks
-    _addHandlerCompClick(handler) {
-      this._parentElement.addEventListener("click", function(e) {
-        const compClicked = e.target.closest(".comp-div");
-        if (!compClicked) return;
-        handler(compClicked.id);
-      });
-    }
-    //_________________________________________________________________________
-    //add active class to comp block via state's active id
-    _activateCompBlock(stateData) {
-      this._data = stateData;
-      const activeCompBlock = document.querySelector(`#${stateData.activeId}`);
-      document.querySelectorAll(".comp-div").forEach((el) => {
-        el.classList.remove("active");
-      });
-      activeCompBlock.classList.add("active");
-    }
-    //_________________________________________________________________________
-    //set active comp's image via state's active id
-    _configCompBlock(stateData) {
-      this._data = stateData;
-      const activeStateComp = stateData.stateCompsArray.find(
-        (el) => el.id === stateData.activeId
-      );
-      const activeCompBlock = document.querySelector(`#${activeStateComp.id}`);
-      activeCompBlock.querySelector(".img").srcset = activeStateComp.image;
-    }
-    //_________________________________________________________________________
-    //add comp block via state's active id
-    _addCompBlock(stateData) {
-      this._data = stateData;
-      const activeStateComp = stateData.stateCompsArray.find(
-        (el) => el.active === true
-      );
-      this._parentElement.insertAdjacentHTML(
-        "afterbegin",
-        this._generateMarkup("compBlock", activeStateComp)
-      );
-      this._activateCompBlock(stateData);
-    }
-    //_________________________________________________________________________
-    //render entire stack from model data
-    _renderStack(stateData) {
-      this._data = stateData;
-      this._parentElement.innerHTML = "";
-      stateData.stackCompsArray.forEach((el) => {
-        let compBlock = this._generateMarkup("compBlock", el);
-        this._parentElement.insertAdjacentHTML("afterbegin", compBlock);
-        let compDiv = document.querySelector(".comp-div");
-        if (el.active) compDiv.classList.add("active");
-      });
-    }
-    //_________________________________________________________________________
-    //Send in compType for either 'compBlock', 'compSideBlock'
-    _generateMarkup = function(compType, el) {
-      if (compType === "compBlock") {
-        return `
-    <div id=${el.id} class="comp-div">
+(()=>{var a={blank:"https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s-p-500.png",side:"https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png",spl:"https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a5fa6e4d52fd0b3de57a9_3D-spl.png",man:"https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a5fa6725b057559cbf6aa_3D-man.png",hyd:"https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a5fa6f13b04fef09ca675_3D-hyd.png",adaptor:"https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a74027217473126aea363_3D-dsa.png",single:"https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6ec4b8b91a31aa5abe_3D-single.png",cross:"https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6e1a63013f513c6d6b_3D-cross.png",cross_limit:"https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a776323e23acebce2481d_3D-cross-limit.png",bell_nipple:"https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a69c604d50a77f5517d85_3D-bell-nipple.png",gate_valve:"https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6f7172a37aa03166a1_3D-gate-valve.png",washington:"https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6e03fa1f13aafbc392_3D-washington.png",wellhead:"https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a5fa60fc8656bfb6db500_3D-wellhead.png",annular:"https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a68e44adb1f08dc09b296_3D-annular.png",spool:"https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6e7e501610bd690378_3D-spool.png",double:"https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6ed57c9634eecf5172_3D-double.png"};var d=1,b,n,g,S="_stateCompToActivate",h="_activeStateComp",k="_activeIndex",s={activeId:"c-1",stateCompsArray:[{active:!0,id:`c-${d}`,image:a.blank,height:0,options:{}}]},r=function(i){s.stateCompsArray.forEach(e=>{e.active=!1}),l(S,i),b.active=!0,s.activeId=i},C=function(i){l(h,s.activeId),n.image=a[i],n.options={}},w=function(){d=1;for(let i=s.stateCompsArray.length-1;i>0;i--)s.stateCompsArray[i].id=`c-${d}`,d++;l(h),s.activeId=n.id},u=function(){d++;let i={active:!0,id:`c-${d}`,image:a.blank,height:0,options:{}};s.stateCompsArray.splice(g,0,i),l(k,i.id),r(i.id),w(),s.activeId=n.id},l=function(i,e){switch(i){case"_stateCompToActivate":b=s.stateCompsArray.find(t=>t.id===e);break;case"_activeStateComp":e?n=s.stateCompsArray.find(t=>t.id===e):n=s.stateCompsArray.find(t=>t.active=!0);break;case"_activeIndex":g=s.stateCompsArray.indexOf(s.stateCompsArray.find(t=>t.id===e));break}};var c=class{_data;_activeStateComp;_activeCompBlock};var v=class extends c{_parentElement=document.querySelector(".vert_buttons_div");_addHandlerCompButtons(e){this._parentElement.addEventListener("click",function(t){let o=t.target.closest(".comp_button").className.split(" ")[1];o&&e(o)})}},A=new v;var _=class i extends c{_parentElement=document.querySelector(".comp-wrapper");_addHandlerCompClick(e){this._parentElement.addEventListener("click",function(t){let o=t.target.closest(".comp-div");o&&e(o.id)})}_activateCompBlock(e){this._data=e;let t=document.querySelector(`#${e.activeId}`);document.querySelectorAll(".comp-div").forEach(o=>{o.classList.remove("active")}),t.classList.add("active")}_configCompBlock(e){this._data=e;let t=e.stateCompsArray.find(m=>m.id===e.activeId),o=document.querySelector(`#${t.id}`);o.querySelector(".img").srcset=t.image}_addCompBlock(e){this._data=e;let t=e.stateCompsArray.find(o=>o.active===!0);this._parentElement.insertAdjacentHTML("afterbegin",this._generateMarkup("compBlock",t)),this._activateCompBlock(e)}_renderStack(e){this._data=e,this._parentElement.innerHTML="",e.stackCompsArray.forEach(t=>{let o=this._generateMarkup("compBlock",t);this._parentElement.insertAdjacentHTML("afterbegin",o);let m=document.querySelector(".comp-div");t.active&&m.classList.add("active")})}_generateMarkup=function(e,t){if(e==="compBlock")return`
+    <div id=${t.id} class="comp-div">
       <div class="side_left_div hide">
         <div class="left_comp">
-          <img class="img_side" src=${COMP_IMG.side}>
+          <img class="img_side" src=${a.side}>
           <div class="hyd_spacer hide"></div>
         </div>
       </div>
       <div class="height-div hide">
         <div class="height-text">height</div>
       </div>
-      <img class="img" src=${el.image}>
+      <img class="img" src=${t.image}>
       <div class="opts-div hide">
         <div class="opts-text">options</div>
         <div class="opts-spacer"></div>
@@ -206,63 +17,12 @@
       </div>
       <div class="side_right_div hide">
         <div class="right_comp">
-          <img class="img_side" src=${COMP_IMG.side}>
+          <img class="img_side" src=${a.side}>
           <div class="hyd_spacer hide"></div>
         </div>
-    </div>`;
-      }
-      if (compType === "compSideBlock") {
-        return `
-    <div class= "${_stackView._sideFlag}_comp active">
+    </div>`;if(e==="compSideBlock")return`
+    <div class= "${i._sideFlag}_comp active">
       <img class="img_side" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png">
       <div class="hyd_spacer hide"></div>
-    </div>`;
-      }
-    };
-  };
-  var stackView_default = new stackView2();
-
-  // src/js/views/controlButtonsView.js
-  var controlButtonsView = class extends View {
-    _parentElement = document.querySelector(".control_buttons_div");
-    controlButtonsViewFunction() {
-      console.log("inside controlButtonsViewFunction");
-      console.log(this._parentElement);
-    }
-  };
-  var controlButtonsView_default = new controlButtonsView();
-
-  // src/js/controller.js
-  var controlCompButtons = function(compButtonClickedName) {
-    switch (compButtonClickedName) {
-      case "plus":
-        _addStateComp();
-        stackView_default._addCompBlock(state);
-        break;
-      case "minus":
-        break;
-      default:
-        _configActiveStateComp(compButtonClickedName);
-        stackView_default._configCompBlock(state);
-        break;
-    }
-  };
-  var controlCompClick = function(compClickedId) {
-    _activateStateComp(compClickedId);
-    stackView_default._activateCompBlock(state);
-  };
-  var init = function() {
-    const testBtn = document.querySelector(".test_button");
-    testBtn.addEventListener("click", function(e) {
-      console.log("active state id: " + state.activeId);
-      console.log("state array: ");
-      state.stateCompsArray.forEach((el) => {
-        console.log(el);
-      });
-    });
-    _activateStateComp("c-1");
-    compButtonsView_default._addHandlerCompButtons(controlCompButtons);
-    stackView_default._addHandlerCompClick(controlCompClick);
-  };
-  init();
-})();
+    </div>`}},p=new _;var f=class extends c{_parentElement=document.querySelector(".control_buttons_div");controlButtonsViewFunction(){console.log("inside controlButtonsViewFunction"),console.log(this._parentElement)}},K=new f;var x=function(i){switch(i){case"plus":u(),p._addCompBlock(s);break;case"minus":break;default:C(i),p._configCompBlock(s);break}},T=function(i){r(i),p._activateCompBlock(s)},y=function(){document.querySelector(".test_button").addEventListener("click",function(e){console.log("active state id: "+s.activeId),console.log("state array: "),s.stateCompsArray.forEach(t=>{console.log(t)})}),r("c-1"),A._addHandlerCompButtons(x),p._addHandlerCompClick(T)};y();})();
+//# sourceMappingURL=controller.js.map
