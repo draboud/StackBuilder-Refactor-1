@@ -37,8 +37,13 @@ class stackView extends View {
   //add comp block via state's active id
   _addCompBlock() {
     this._retarget(ACTIVE_STATE_COMP);
-    this._parentElement.insertAdjacentHTML(
-      "afterbegin",
+    // this._parentElement.insertAdjacentHTML(
+    //   "afterbegin",
+    //   _generateMarkup(ACTIVE_COMP_BLOCK, this._activeStateComp)
+    // );
+    // this._retarget(ACTIVE_COMP_BLOCK);
+    this._activeCompBlock.insertAdjacentHTML(
+      "beforebegin",
       _generateMarkup(ACTIVE_COMP_BLOCK, this._activeStateComp)
     );
   }

@@ -200,8 +200,8 @@
     //add comp block via state's active id
     _addCompBlock() {
       this._retarget(ACTIVE_STATE_COMP);
-      this._parentElement.insertAdjacentHTML(
-        "afterbegin",
+      this._activeCompBlock.insertAdjacentHTML(
+        "beforebegin",
         _generateMarkup(ACTIVE_COMP_BLOCK, this._activeStateComp)
       );
     }
@@ -250,6 +250,7 @@
       });
     });
     _activateStateComp("c-1");
+    stackView_default._activateCompBlock();
     compButtonsView_default._addHandlerCompButtons(controlCompButtons);
     stackView_default._addHandlerCompClick(controlCompClick);
   };

@@ -38,8 +38,9 @@ const init = function () {
     });
   });
 
-  //start with base comp block active and fed into model.state
+  //start with base comp block active and fed into model.state, then activate base comp block
   model._activateStateComp("c-1");
+  stackView._activateCompBlock();
   //set handler functions
   compButtonsView._addHandlerCompButtons(controlCompButtons);
   stackView._addHandlerCompClick(controlCompClick);
