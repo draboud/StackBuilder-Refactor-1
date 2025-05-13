@@ -70,11 +70,11 @@ export const COMP_HEIGHTS = {
   washington: 60,
 };
 //_________________________________________________________________________
-//Send indicator into function for either 'compBlock', 'compSideBlock', 'adaptor'
-export const GENERATE_MARKUP = function (compType) {
-  if (compType === "compBlock") {
+//Send in either '_activeCompBlock', '_activeCompSideBlock' for html element output
+export const _generateMarkup = function (compType, el) {
+  if (compType === "_activeCompBlock") {
     return `
-    <div id="new" class="comp-div">
+    <div id=${el.id} class="comp-div">
       <div class="side_left_div hide">
         <div class="left_comp">
           <img class="img_side" src=${COMP_IMG.side}>
@@ -84,7 +84,7 @@ export const GENERATE_MARKUP = function (compType) {
       <div class="height-div hide">
         <div class="height-text">height</div>
       </div>
-      <img class="img" src=${COMP_IMG.blank}>
+      <img class="img" src=${el.image}>
       <div class="opts-div hide">
         <div class="opts-text">options</div>
         <div class="opts-spacer"></div>
@@ -97,7 +97,7 @@ export const GENERATE_MARKUP = function (compType) {
         </div>
     </div>`;
   }
-  if (compType === "compSideBlock") {
+  if (compType === "_activeCompSideBlock") {
     return `
     <div class= "${stackView._sideFlag}_comp active">
       <img class="img_side" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png">

@@ -10,7 +10,8 @@ const controlCompButtons = function (compButtonClickedName) {
   switch (compButtonClickedName) {
     case "plus":
       model._addStateComp();
-      stackView._addCompBlock(model.state);
+      stackView._addCompBlock();
+      stackView._activateCompBlock();
       break;
     case "minus":
       // model._removeStateComp();

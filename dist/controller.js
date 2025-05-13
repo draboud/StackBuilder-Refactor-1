@@ -18,6 +18,42 @@
     spool: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6e7e501610bd690378_3D-spool.png",
     double: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6ed57c9634eecf5172_3D-double.png"
   };
+  var _generateMarkup = function(compType, el) {
+    if (compType === "_activeCompBlock") {
+      return `
+    <div id=${el.id} class="comp-div">
+      <div class="side_left_div hide">
+        <div class="left_comp">
+          <img class="img_side" src=${COMP_IMG.side}>
+          <div class="hyd_spacer hide"></div>
+        </div>
+      </div>
+      <div class="height-div hide">
+        <div class="height-text">height</div>
+      </div>
+      <img class="img" src=${el.image}>
+      <div class="opts-div hide">
+        <div class="opts-text">options</div>
+        <div class="opts-spacer"></div>
+        <div class="opts-text second">options</div>
+      </div>
+      <div class="side_right_div hide">
+        <div class="right_comp">
+          <img class="img_side" src=${COMP_IMG.side}>
+          <div class="hyd_spacer hide"></div>
+        </div>
+    </div>`;
+    }
+    if (compType === "_activeCompSideBlock") {
+      return `
+    <div class= "${stackView._sideFlag}_comp active">
+      <img class="img_side" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png">
+      <div class="hyd_spacer hide"></div>
+    </div>`;
+    }
+  };
+  var ACTIVE_STATE_COMP = "_activeStateComp";
+  var ACTIVE_COMP_BLOCK = "_activeCompBlock";
 
   // src/js/model.js
   var _idCount = 1;
@@ -25,7 +61,7 @@
   var _activeStateComp;
   var _activeIndex;
   var STATE_COMP_TO_ACTIVATE = "_stateCompToActivate";
-  var ACTIVE_STATE_COMP = "_activeStateComp";
+  var ACTIVE_STATE_COMP2 = "_activeStateComp";
   var ACTIVE_INDEX = "_activeIndex";
   var state = {
     activeId: "c-1",
@@ -48,7 +84,7 @@
     state.activeId = id;
   };
   var _configActiveStateComp = function(compType) {
-    _retarget(ACTIVE_STATE_COMP, state.activeId);
+    _retarget(ACTIVE_STATE_COMP2, state.activeId);
     _activeStateComp.image = COMP_IMG[compType];
     _activeStateComp.options = {};
   };
@@ -58,7 +94,7 @@
       state.stateCompsArray[i].id = `c-${_idCount}`;
       _idCount++;
     }
-    _retarget(ACTIVE_STATE_COMP);
+    _retarget(ACTIVE_STATE_COMP2);
     state.activeId = _activeStateComp.id;
   };
   var _addStateComp = function() {
@@ -103,14 +139,21 @@
     _data;
     _activeStateComp;
     _activeCompBlock;
-    // _retarget = function (comp, id) {
-    //   switch (comp){
-    //     case _activateStateComp
-    //   }
-    //   _activateStateComp = stateData.stateCompsArray.find(
-    //     (el) => el.id === stateData.activeId
-    //   );
-    // };
+    _retarget = function(comp) {
+      this._data = state;
+      switch (comp) {
+        case "_activeStateComp":
+          this._activeStateComp = this._data.stateCompsArray.find(
+            (el) => el.id === this._data.activeId
+          );
+          break;
+        case "_activeCompBlock":
+          this._activeCompBlock = document.querySelector(
+            `#${this._data.activeId}`
+          );
+          break;
+      }
+    };
   };
 
   // src/js/views/compButtonsView.js
@@ -118,17 +161,16 @@
     _parentElement = document.querySelector(".vert_buttons_div");
     _addHandlerCompButtons(handler) {
       this._parentElement.addEventListener("click", function(e) {
-        const compButtonClicked = e.target.closest(".comp_button").className.split(" ")[1];
+        const compButtonClicked = e.target.closest(".comp_button");
         if (!compButtonClicked) return;
-        handler(compButtonClicked);
+        handler(compButtonClicked.className.split(" ")[1]);
       });
     }
   };
   var compButtonsView_default = new compButtonsView();
 
   // src/js/views/stackView.js
-  var stackView2 = class _stackView extends View {
-    // _data;
+  var stackView2 = class extends View {
     _parentElement = document.querySelector(".comp-wrapper");
     //click events for all comp blocks
     _addHandlerCompClick(handler) {
@@ -140,85 +182,30 @@
     }
     //_________________________________________________________________________
     //add active class to comp block via state's active id
-    _activateCompBlock(stateData) {
-      this._data = stateData;
-      const activeCompBlock = document.querySelector(`#${stateData.activeId}`);
+    _activateCompBlock() {
+      this._retarget(ACTIVE_COMP_BLOCK);
       document.querySelectorAll(".comp-div").forEach((el) => {
         el.classList.remove("active");
       });
-      activeCompBlock.classList.add("active");
+      this._activeCompBlock.classList.add("active");
     }
     //_________________________________________________________________________
     //set active comp's image via state's active id
-    _configCompBlock(stateData) {
-      this._data = stateData;
-      const activeStateComp = stateData.stateCompsArray.find(
-        (el) => el.id === stateData.activeId
-      );
-      const activeCompBlock = document.querySelector(`#${activeStateComp.id}`);
-      activeCompBlock.querySelector(".img").srcset = activeStateComp.image;
+    _configCompBlock() {
+      this._retarget(ACTIVE_STATE_COMP);
+      this._retarget(ACTIVE_COMP_BLOCK);
+      this._activeCompBlock.querySelector(".img").srcset = this._activeStateComp.image;
     }
     //_________________________________________________________________________
     //add comp block via state's active id
-    _addCompBlock(stateData) {
-      this._data = stateData;
-      const activeStateComp = stateData.stateCompsArray.find(
-        (el) => el.active === true
-      );
+    _addCompBlock() {
+      this._retarget(ACTIVE_STATE_COMP);
       this._parentElement.insertAdjacentHTML(
         "afterbegin",
-        this._generateMarkup("compBlock", activeStateComp)
+        _generateMarkup(ACTIVE_COMP_BLOCK, this._activeStateComp)
       );
-      this._activateCompBlock(stateData);
     }
     //_________________________________________________________________________
-    //render entire stack from model data
-    _renderStack(stateData) {
-      this._data = stateData;
-      this._parentElement.innerHTML = "";
-      stateData.stackCompsArray.forEach((el) => {
-        let compBlock = this._generateMarkup("compBlock", el);
-        this._parentElement.insertAdjacentHTML("afterbegin", compBlock);
-        let compDiv = document.querySelector(".comp-div");
-        if (el.active) compDiv.classList.add("active");
-      });
-    }
-    //_________________________________________________________________________
-    //Send in compType for either 'compBlock', 'compSideBlock'
-    _generateMarkup = function(compType, el) {
-      if (compType === "compBlock") {
-        return `
-    <div id=${el.id} class="comp-div">
-      <div class="side_left_div hide">
-        <div class="left_comp">
-          <img class="img_side" src=${COMP_IMG.side}>
-          <div class="hyd_spacer hide"></div>
-        </div>
-      </div>
-      <div class="height-div hide">
-        <div class="height-text">height</div>
-      </div>
-      <img class="img" src=${el.image}>
-      <div class="opts-div hide">
-        <div class="opts-text">options</div>
-        <div class="opts-spacer"></div>
-        <div class="opts-text second">options</div>
-      </div>
-      <div class="side_right_div hide">
-        <div class="right_comp">
-          <img class="img_side" src=${COMP_IMG.side}>
-          <div class="hyd_spacer hide"></div>
-        </div>
-    </div>`;
-      }
-      if (compType === "compSideBlock") {
-        return `
-    <div class= "${_stackView._sideFlag}_comp active">
-      <img class="img_side" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png">
-      <div class="hyd_spacer hide"></div>
-    </div>`;
-      }
-    };
   };
   var stackView_default = new stackView2();
 
@@ -238,7 +225,8 @@
     switch (compButtonClickedName) {
       case "plus":
         _addStateComp();
-        stackView_default._addCompBlock(state);
+        stackView_default._addCompBlock();
+        stackView_default._activateCompBlock();
         break;
       case "minus":
         break;

@@ -5,11 +5,9 @@ class compButtonsView extends View {
 
   _addHandlerCompButtons(handler) {
     this._parentElement.addEventListener("click", function (e) {
-      const compButtonClicked = e.target
-        .closest(".comp_button")
-        .className.split(" ")[1];
+      const compButtonClicked = e.target.closest(".comp_button");
       if (!compButtonClicked) return;
-      handler(compButtonClicked);
+      handler(compButtonClicked.className.split(" ")[1]);
     });
   }
 }
