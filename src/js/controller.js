@@ -37,7 +37,6 @@ const init = function () {
 
   //start with base comp block active and fed into model.state
   model._activateStateComp("c-1");
-
   //set handler functions
   compButtonsView._addHandlerCompButtons(controlCompButtons);
   stackView._addHandlerCompClick(controlCompClick);
