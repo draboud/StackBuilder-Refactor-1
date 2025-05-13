@@ -13,8 +13,6 @@ export const COMP_CLASSES = [
   "bell_nipple",
 ];
 export const COMP_IMG = {
-  test: "/images/3D-annular.png",
-
   blank:
     "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s-p-500.png",
 
