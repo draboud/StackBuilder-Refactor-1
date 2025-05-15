@@ -4,7 +4,7 @@ import stackView from "./views/stackView.js";
 import controlButtonsView from "./views/controlButtonsView.js";
 import { GET_COMP } from "./helpers.js";
 
-console.log("BRANCH: fix-ids");
+console.log("BRANCH: main");
 
 const controlCompButtons = function (compButtonClickedName) {
   switch (compButtonClickedName) {
@@ -15,11 +15,15 @@ const controlCompButtons = function (compButtonClickedName) {
       stackView._setActiveCompBlock();
       break;
     case "minus":
-      model._removeStateComp();
-      stackView._removeCompBlock();
-      model._resetAfterRemoval();
-      stackView._resetCompBlockIds();
-      stackView._setActiveCompBlock();
+      let canRemoveComp;
+      canRemoveComp = model._removeStateComp();
+      if (canRemoveComp) {
+        //check if comp is not 'c-1' (base comp)
+        stackView._removeCompBlock();
+        model._resetAfterRemoval();
+        stackView._resetCompBlockIds();
+        stackView._setActiveCompBlock();
+      }
       break;
     default:
       model._configActiveStateComp(compButtonClickedName);

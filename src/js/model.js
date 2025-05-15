@@ -25,7 +25,7 @@ export const _setActiveStateComp = function (id) {
   _retarget(ACTIVE_STATE_COMP, id);
   _activeStateComp.active = true;
   state.activeId = id;
-  _retarget(ACTIVE_INDEX, state.activeId); //instead of in _addStateComp
+  _retarget(ACTIVE_INDEX, state.activeId);
 };
 //_________________________________________________________________________
 //function description
@@ -53,7 +53,6 @@ export const _addStateComp = function () {
     height: 0,
     options: {},
   };
-  // _retarget(ACTIVE_INDEX, state.activeId);
   state.stateCompsArray.splice(_activeIndex + 1, 0, newStateComp);
   _resetStateCompIds();
   _setActiveStateComp(state.activeId);
@@ -61,7 +60,13 @@ export const _addStateComp = function () {
 //_________________________________________________________________________
 //after removal, stackView updates UI then reset is called to update new active comp
 export const _removeStateComp = function () {
-  state.stateCompsArray.splice(_activeIndex, 1);
+  if (_activeStateComp.id != "c-1") {
+    state.stateCompsArray.splice(_activeIndex, 1);
+    return true;
+  } else {
+    console.log("you can't delete this one!");
+    return false;
+  }
 };
 //_________________________________________________________________________
 //called after stackView updates the UI from initial removal

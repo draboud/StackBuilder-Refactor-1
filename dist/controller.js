@@ -106,7 +106,13 @@
     _setActiveStateComp(state.activeId);
   };
   var _removeStateComp = function() {
-    state.stateCompsArray.splice(_activeIndex, 1);
+    if (_activeStateComp.id != "c-1") {
+      state.stateCompsArray.splice(_activeIndex, 1);
+      return true;
+    } else {
+      console.log("you can't delete this one!");
+      return false;
+    }
   };
   var _resetAfterRemoval = function() {
     _setActiveStateComp(state.stateCompsArray[_activeIndex - 1].id);
@@ -243,7 +249,7 @@
   var controlButtonsView_default = new controlButtonsView();
 
   // src/js/controller.js
-  console.log("BRANCH: fix-ids");
+  console.log("BRANCH: main");
   var controlCompButtons = function(compButtonClickedName) {
     switch (compButtonClickedName) {
       case "plus":
@@ -253,11 +259,14 @@
         stackView_default._setActiveCompBlock();
         break;
       case "minus":
-        _removeStateComp();
-        stackView_default._removeCompBlock();
-        _resetAfterRemoval();
-        stackView_default._resetCompBlockIds();
-        stackView_default._setActiveCompBlock();
+        let canRemoveComp;
+        canRemoveComp = _removeStateComp();
+        if (canRemoveComp) {
+          stackView_default._removeCompBlock();
+          _resetAfterRemoval();
+          stackView_default._resetCompBlockIds();
+          stackView_default._setActiveCompBlock();
+        }
         break;
       default:
         _configActiveStateComp(compButtonClickedName);
