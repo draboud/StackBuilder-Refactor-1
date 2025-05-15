@@ -58,7 +58,6 @@
   var ALL_COMP_BLOCKS = "_allCompBlocks";
 
   // src/js/model.js
-  var _idCount = 1;
   var _activeStateComp;
   var _activeIndex;
   var state = {
@@ -66,7 +65,7 @@
     stateCompsArray: [
       {
         active: true,
-        id: `c-${_idCount}`,
+        id: `c-1`,
         image: COMP_IMG.blank,
         height: 0,
         options: {}
@@ -80,6 +79,7 @@
     _retarget(ACTIVE_STATE_COMP, id);
     _activeStateComp.active = true;
     state.activeId = id;
+    _retarget(ACTIVE_INDEX, state.activeId);
   };
   var _configActiveStateComp = function(compType) {
     _activeStateComp.image = COMP_IMG[compType];
@@ -94,7 +94,6 @@
     }
   };
   var _addStateComp = function() {
-    _idCount++;
     const newStateComp = {
       active: false,
       id: "new",
@@ -102,10 +101,16 @@
       height: 0,
       options: {}
     };
-    _retarget(ACTIVE_INDEX, state.activeId);
     state.stateCompsArray.splice(_activeIndex + 1, 0, newStateComp);
     _resetStateCompIds();
     _setActiveStateComp(state.activeId);
+  };
+  var _removeStateComp = function() {
+    state.stateCompsArray.splice(_activeIndex, 1);
+  };
+  var _resetAfterRemoval = function() {
+    _setActiveStateComp(state.stateCompsArray[_activeIndex - 1].id);
+    _resetStateCompIds();
   };
   var _retarget = function(stateCompEl, id) {
     switch (stateCompEl) {
@@ -212,7 +217,10 @@
     }
     //_________________________________________________________________________
     //add comp block via state's active id
-    _deleteCompBlock() {
+    _removeCompBlock() {
+      this._retarget(ACTIVE_STATE_COMP);
+      this._retarget(ACTIVE_COMP_BLOCK);
+      this._activeCompBlock.parentNode.removeChild(this._activeCompBlock);
     }
     //_________________________________________________________________________
     //function description
@@ -245,6 +253,11 @@
         stackView_default._setActiveCompBlock();
         break;
       case "minus":
+        _removeStateComp();
+        stackView_default._removeCompBlock();
+        _resetAfterRemoval();
+        stackView_default._resetCompBlockIds();
+        stackView_default._setActiveCompBlock();
         break;
       default:
         _configActiveStateComp(compButtonClickedName);
@@ -259,10 +272,7 @@
   var init = function() {
     const testBtn = document.querySelector(".test_button");
     testBtn.addEventListener("click", function(e) {
-      const allCompBlocks = stackView_default._getAllCompBlocks();
-      allCompBlocks.forEach((el) => console.log(el));
       console.log("active state id: " + state.activeId);
-      console.log(state.stateCompsArray);
       console.log("state array: ");
       state.stateCompsArray.forEach((el) => {
         console.log(el);

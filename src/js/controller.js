@@ -15,7 +15,11 @@ const controlCompButtons = function (compButtonClickedName) {
       stackView._setActiveCompBlock();
       break;
     case "minus":
-      // model._removeStateComp();
+      model._removeStateComp();
+      stackView._removeCompBlock();
+      model._resetAfterRemoval();
+      stackView._resetCompBlockIds();
+      stackView._setActiveCompBlock();
       break;
     default:
       model._configActiveStateComp(compButtonClickedName);
@@ -30,18 +34,25 @@ const controlCompClick = function (compClickedId) {
 };
 
 const init = function () {
+  //..................................................................
   const testBtn = document.querySelector(".test_button");
   testBtn.addEventListener("click", function (e) {
-    const allCompBlocks = stackView._getAllCompBlocks();
-    allCompBlocks.forEach((el) => console.log(el));
-
+    //........................................
+    // const allCompBlocks = stackView._getAllCompBlocks();
+    // allCompBlocks.forEach((el) => console.log(el));
     console.log("active state id: " + model.state.activeId);
-    console.log(model.state.stateCompsArray);
     console.log("state array: ");
     model.state.stateCompsArray.forEach((el) => {
       console.log(el);
     });
+    //........................................
+    // const myArr = [1, 2, 3, 4, 5];
+    // const myArrIndex = 2;
+    // myArr.splice(myArrIndex, 1);
+    // console.log("myArr: " + myArr);
+    // console.log("value at myArrIndex: " + myArr[myArrIndex]);
   });
+  //..................................................................
 
   //start with base comp block active and fed into model.state, then activate base comp block
   model._setActiveStateComp("c-1");

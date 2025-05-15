@@ -1,6 +1,5 @@
 import { ACTIVE_INDEX, ACTIVE_STATE_COMP, COMP_IMG } from "./config";
 
-let _idCount = 1;
 let _activeStateComp;
 let _activeIndex;
 //_________________________________________________________________________
@@ -10,7 +9,7 @@ export let state = {
   stateCompsArray: [
     {
       active: true,
-      id: `c-${_idCount}`,
+      id: `c-1`,
       image: COMP_IMG.blank,
       height: 0,
       options: {},
@@ -26,6 +25,7 @@ export const _setActiveStateComp = function (id) {
   _retarget(ACTIVE_STATE_COMP, id);
   _activeStateComp.active = true;
   state.activeId = id;
+  _retarget(ACTIVE_INDEX, state.activeId); //instead of in _addStateComp
 };
 //_________________________________________________________________________
 //function description
@@ -46,7 +46,6 @@ export const _resetStateCompIds = function () {
 //_________________________________________________________________________
 //function description
 export const _addStateComp = function () {
-  _idCount++;
   const newStateComp = {
     active: false,
     id: "new",
@@ -54,10 +53,21 @@ export const _addStateComp = function () {
     height: 0,
     options: {},
   };
-  _retarget(ACTIVE_INDEX, state.activeId);
+  // _retarget(ACTIVE_INDEX, state.activeId);
   state.stateCompsArray.splice(_activeIndex + 1, 0, newStateComp);
   _resetStateCompIds();
   _setActiveStateComp(state.activeId);
+};
+//_________________________________________________________________________
+//after removal, stackView updates UI then reset is called to update new active comp
+export const _removeStateComp = function () {
+  state.stateCompsArray.splice(_activeIndex, 1);
+};
+//_________________________________________________________________________
+//called after stackView updates the UI from initial removal
+export const _resetAfterRemoval = function () {
+  _setActiveStateComp(state.stateCompsArray[_activeIndex - 1].id);
+  _resetStateCompIds();
 };
 //_________________________________________________________________________
 //function description
@@ -79,22 +89,3 @@ export const _retarget = function (stateCompEl, id) {
       break;
   }
 };
-//_________________________________________________________________________
-//function description
-export const _getStateComp = function (stateCompEl, id) {
-  switch (stateCompEl) {
-    case "_activeStateComp":
-      if (id) {
-        return state.stateCompsArray.find((el) => el.id === id);
-      } else {
-        return state.stateCompsArray.find((el) => el.active === true);
-      }
-    case "_activeIndex":
-      return state.stateCompsArray.indexOf(
-        state.stateCompsArray.find((el) => el.id === id)
-      );
-  }
-};
-//_________________________________________________________________________
-//function description
-export const _setStateComp = function () {};

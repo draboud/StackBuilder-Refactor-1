@@ -54,8 +54,10 @@ class stackView extends View {
   }
   //_________________________________________________________________________
   //add comp block via state's active id
-  _deleteCompBlock() {
-    // this.
+  _removeCompBlock() {
+    this._retarget(ACTIVE_STATE_COMP);
+    this._retarget(ACTIVE_COMP_BLOCK);
+    this._activeCompBlock.parentNode.removeChild(this._activeCompBlock);
   }
   //_________________________________________________________________________
   //function description
