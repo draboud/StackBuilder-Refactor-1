@@ -154,4 +154,6 @@ export const PDF_SETTINGS = {
 //_________________________________________________________________________
 //for DOM retargeting
 export const ACTIVE_STATE_COMP = "_activeStateComp";
+export const ACTIVE_INDEX = "_activeIndex";
 export const ACTIVE_COMP_BLOCK = "_activeCompBlock";
+export const ALL_COMP_BLOCKS = "_allCompBlocks";

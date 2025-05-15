@@ -3,6 +3,7 @@ import {
   _generateMarkup,
   ACTIVE_COMP_BLOCK,
   ACTIVE_STATE_COMP,
+  ALL_COMP_BLOCKS,
 } from "../config";
 
 class stackView extends View {
@@ -19,6 +20,7 @@ class stackView extends View {
   //_________________________________________________________________________
   //add active class to comp block via state's active id
   _setActiveCompBlock() {
+    this._retarget(ACTIVE_STATE_COMP);
     this._retarget(ACTIVE_COMP_BLOCK);
     document.querySelectorAll(".comp-div").forEach((el) => {
       el.classList.remove("active");
@@ -26,10 +28,18 @@ class stackView extends View {
     this._activeCompBlock.classList.add("active");
   }
   //_________________________________________________________________________
+  //loops forwards through state array, backwards through comp blocks to keep id-1 at bottom
+  _resetCompBlockIds() {
+    this._retarget(ALL_COMP_BLOCKS);
+    const stateDataArray = this._data.stateCompsArray; //these vars to use 'this' in for loop
+    const allCompBlocks = this._allCompBlocks;
+    for (let i = 0; i < stateDataArray.length; i++) {
+      allCompBlocks[i].id = stateDataArray[stateDataArray.length - 1 - i].id;
+    }
+  }
+  //_________________________________________________________________________
   //set active comp's image via state's active id
   _configCompBlock() {
-    this._retarget(ACTIVE_STATE_COMP);
-    this._retarget(ACTIVE_COMP_BLOCK);
     this._activeCompBlock.querySelector(".img").srcset =
       this._activeStateComp.image;
   }
@@ -46,6 +56,12 @@ class stackView extends View {
   //add comp block via state's active id
   _deleteCompBlock() {
     // this.
+  }
+  //_________________________________________________________________________
+  //function description
+  _getAllCompBlocks() {
+    const allCompBlocks = this._allCompBlocks;
+    return allCompBlocks;
   }
   //_________________________________________________________________________
 }

@@ -4,13 +4,14 @@ import stackView from "./views/stackView.js";
 import controlButtonsView from "./views/controlButtonsView.js";
 import { GET_COMP } from "./helpers.js";
 
-console.log("BRANCH: retarget from view");
+console.log("BRANCH: fix-ids");
 
 const controlCompButtons = function (compButtonClickedName) {
   switch (compButtonClickedName) {
     case "plus":
       model._addStateComp();
       stackView._addCompBlock();
+      stackView._resetCompBlockIds();
       stackView._setActiveCompBlock();
       break;
     case "minus":
@@ -25,13 +26,17 @@ const controlCompButtons = function (compButtonClickedName) {
 
 const controlCompClick = function (compClickedId) {
   model._setActiveStateComp(compClickedId);
-  stackView._setActiveCompBlock(model.state);
+  stackView._setActiveCompBlock();
 };
 
 const init = function () {
   const testBtn = document.querySelector(".test_button");
   testBtn.addEventListener("click", function (e) {
+    const allCompBlocks = stackView._getAllCompBlocks();
+    allCompBlocks.forEach((el) => console.log(el));
+
     console.log("active state id: " + model.state.activeId);
+    console.log(model.state.stateCompsArray);
     console.log("state array: ");
     model.state.stateCompsArray.forEach((el) => {
       console.log(el);
