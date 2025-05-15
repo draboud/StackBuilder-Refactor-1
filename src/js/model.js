@@ -58,10 +58,6 @@ export const _addStateComp = function () {
   state.stateCompsArray.splice(_activeIndex + 1, 0, newStateComp);
   _resetStateCompIds();
   _setActiveStateComp(state.activeId);
-  // _retarget(ACTIVE_STATE_COMP);
-  // _setActiveStateComp(_activeStateComp.id);
-  // state.activeId = _activeStateComp.id;
-  // console.log(state.stateCompsArray);
 };
 //_________________________________________________________________________
 //function description
@@ -93,12 +89,10 @@ export const _getStateComp = function (stateCompEl, id) {
       } else {
         return state.stateCompsArray.find((el) => el.active === true);
       }
-    // break;
     case "_activeIndex":
       return state.stateCompsArray.indexOf(
         state.stateCompsArray.find((el) => el.id === id)
       );
-    // break;
   }
 };
 //_________________________________________________________________________
