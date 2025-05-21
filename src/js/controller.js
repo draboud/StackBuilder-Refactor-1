@@ -6,7 +6,7 @@ import optionsView from "./views/optionsView.js";
 import controlButtonsView from "./views/controlButtonsView.js";
 import View from "./views/View.js";
 
-console.log("BRANCH: main");
+console.log("BRANCH: options-text-reference-model");
 
 const controlCompButtons = function (compButtonClickedName) {
   switch (compButtonClickedName) {
