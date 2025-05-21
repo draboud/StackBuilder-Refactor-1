@@ -6,7 +6,6 @@ export default class View {
   static activeStateComp;
   static activeCompBlock;
   static allCompBlocks;
-
   static activeOptsDiv;
   static activeOptsText1;
   static activeOptsSpacer;
