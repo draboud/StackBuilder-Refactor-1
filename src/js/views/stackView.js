@@ -25,14 +25,14 @@ class stackView extends View {
     document.querySelectorAll(".comp-div").forEach((el) => {
       el.classList.remove("active");
     });
-    this._activeCompBlock.classList.add("active");
+    View.sActiveCompBlock.classList.add("active");
   }
   //_________________________________________________________________________
   //loops forwards through state array, backwards through comp blocks to keep id-1 at bottom
   _resetCompBlockIds() {
     this._retarget(ALL_COMP_BLOCKS);
     const stateDataArray = this._data.stateCompsArray; //these vars to use 'this' in for loop
-    const allCompBlocks = this._allCompBlocks;
+    const allCompBlocks = View.sAllCompBlocks;
     for (let i = 0; i < stateDataArray.length; i++) {
       allCompBlocks[i].id = stateDataArray[stateDataArray.length - 1 - i].id;
     }
@@ -40,30 +40,22 @@ class stackView extends View {
   //_________________________________________________________________________
   //set active comp's image via state's active id
   _configCompBlock() {
-    this._activeCompBlock.querySelector(".img").srcset =
-      this._activeStateComp.image;
+    View.sActiveCompBlock.querySelector(".img").srcset =
+      View.sActiveStateComp.image;
   }
   //_________________________________________________________________________
   //add comp block via state's active id
   _addCompBlock() {
     this._retarget(ACTIVE_STATE_COMP);
-    this._activeCompBlock.insertAdjacentHTML(
+    View.sActiveCompBlock.insertAdjacentHTML(
       "beforebegin",
-      _generateMarkup(ACTIVE_COMP_BLOCK, this._activeStateComp)
+      _generateMarkup(ACTIVE_COMP_BLOCK, View.sActiveStateComp)
     );
   }
   //_________________________________________________________________________
   //add comp block via state's active id
   _removeCompBlock() {
-    this._retarget(ACTIVE_STATE_COMP);
-    this._retarget(ACTIVE_COMP_BLOCK);
-    this._activeCompBlock.parentNode.removeChild(this._activeCompBlock);
-  }
-  //_________________________________________________________________________
-  //function description
-  _getAllCompBlocks() {
-    const allCompBlocks = this._allCompBlocks;
-    return allCompBlocks;
+    View.sActiveCompBlock.parentNode.removeChild(View.sActiveCompBlock);
   }
   //_________________________________________________________________________
 }

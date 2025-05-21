@@ -1,4 +1,9 @@
-import { ACTIVE_INDEX, ACTIVE_STATE_COMP, COMP_IMG } from "./config";
+import {
+  ACTIVE_INDEX,
+  ACTIVE_STATE_COMP,
+  COMP_HEIGHTS,
+  COMP_IMG,
+} from "./config";
 
 let _activeStateComp;
 let _activeIndex;
@@ -30,6 +35,7 @@ export const _setActiveStateComp = function (id) {
 //_________________________________________________________________________
 //function description
 export const _configActiveStateComp = function (compType) {
+  _activeStateComp.height = COMP_HEIGHTS[compType];
   _activeStateComp.image = COMP_IMG[compType];
   _activeStateComp.options = {};
 };
@@ -49,8 +55,8 @@ export const _addStateComp = function () {
   const newStateComp = {
     active: false,
     id: "new",
-    image: COMP_IMG.blank,
     height: 0,
+    image: COMP_IMG.blank,
     options: {},
   };
   state.stateCompsArray.splice(_activeIndex + 1, 0, newStateComp);

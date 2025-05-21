@@ -12,6 +12,8 @@ export const COMP_CLASSES = [
   "gate_valve",
   "bell_nipple",
 ];
+//_________________________________________________________________________
+//description
 export const COMP_IMG = {
   blank:
     "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s-p-500.png",
@@ -57,7 +59,10 @@ export const COMP_IMG = {
   double:
     "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6ed57c9634eecf5172_3D-double.png",
 };
+//_________________________________________________________________________
+//description
 export const COMP_HEIGHTS = {
+  //in inches
   wellhead: 27,
   spool: 44,
   cross: 49,
@@ -105,7 +110,8 @@ export const _generateMarkup = function (compType, el) {
     </div>`;
   }
 };
-
+//_________________________________________________________________________
+//description
 export const LETTERS = [
   "A",
   "B",

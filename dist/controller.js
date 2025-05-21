@@ -18,6 +18,19 @@
     spool: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6e7e501610bd690378_3D-spool.png",
     double: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6ed57c9634eecf5172_3D-double.png"
   };
+  var COMP_HEIGHTS = {
+    //in inches
+    wellhead: 27,
+    spool: 44,
+    cross: 49,
+    single: 72,
+    double: 112,
+    annular: 91,
+    adaptor: 7,
+    gate_valve: 72,
+    bell_nipple: 112,
+    washington: 60
+  };
   var _generateMarkup = function(compType, el) {
     if (compType === "_activeCompBlock") {
       return `
@@ -82,6 +95,7 @@
     _retarget(ACTIVE_INDEX, state.activeId);
   };
   var _configActiveStateComp = function(compType) {
+    _activeStateComp.height = COMP_HEIGHTS[compType];
     _activeStateComp.image = COMP_IMG[compType];
     _activeStateComp.options = {};
   };
@@ -97,8 +111,8 @@
     const newStateComp = {
       active: false,
       id: "new",
-      image: COMP_IMG.blank,
       height: 0,
+      image: COMP_IMG.blank,
       options: {}
     };
     state.stateCompsArray.splice(_activeIndex + 1, 0, newStateComp);
@@ -138,8 +152,11 @@
   };
 
   // src/js/views/View.js
-  var View = class {
+  var View = class _View {
     _data;
+    static sActiveStateComp;
+    static sActiveCompBlock;
+    static sAllCompBlocks;
     _activeStateComp;
     _activeCompBlock;
     _allCompBlocks;
@@ -147,19 +164,28 @@
       this._data = state;
       switch (comp) {
         case "_activeStateComp":
-          this._activeStateComp = this._data.stateCompsArray.find(
+          _View.sActiveStateComp = this._data.stateCompsArray.find(
             (el) => el.id === this._data.activeId
           );
           break;
         case "_activeCompBlock":
-          this._activeCompBlock = document.querySelector(
+          _View.sActiveCompBlock = document.querySelector(
             `#${this._data.activeId}`
           );
           break;
         case "_allCompBlocks":
-          this._allCompBlocks = document.querySelectorAll(".comp-div");
+          _View.sAllCompBlocks = document.querySelectorAll(".comp-div");
           break;
       }
+    };
+    static getActiveStateBlock = function() {
+      return _View.sActiveStateComp;
+    };
+    static getActiveCompBlock = function() {
+      return _View.sActiveCompBlock;
+    };
+    static getAllCompBlocks = function() {
+      return _View.sAllCompBlocks;
     };
   };
 
@@ -195,14 +221,14 @@
       document.querySelectorAll(".comp-div").forEach((el) => {
         el.classList.remove("active");
       });
-      this._activeCompBlock.classList.add("active");
+      View.sActiveCompBlock.classList.add("active");
     }
     //_________________________________________________________________________
     //loops forwards through state array, backwards through comp blocks to keep id-1 at bottom
     _resetCompBlockIds() {
       this._retarget(ALL_COMP_BLOCKS);
       const stateDataArray = this._data.stateCompsArray;
-      const allCompBlocks = this._allCompBlocks;
+      const allCompBlocks = View.sAllCompBlocks;
       for (let i = 0; i < stateDataArray.length; i++) {
         allCompBlocks[i].id = stateDataArray[stateDataArray.length - 1 - i].id;
       }
@@ -210,33 +236,32 @@
     //_________________________________________________________________________
     //set active comp's image via state's active id
     _configCompBlock() {
-      this._activeCompBlock.querySelector(".img").srcset = this._activeStateComp.image;
+      View.sActiveCompBlock.querySelector(".img").srcset = View.sActiveStateComp.image;
     }
     //_________________________________________________________________________
     //add comp block via state's active id
     _addCompBlock() {
       this._retarget(ACTIVE_STATE_COMP);
-      this._activeCompBlock.insertAdjacentHTML(
+      View.sActiveCompBlock.insertAdjacentHTML(
         "beforebegin",
-        _generateMarkup(ACTIVE_COMP_BLOCK, this._activeStateComp)
+        _generateMarkup(ACTIVE_COMP_BLOCK, View.sActiveStateComp)
       );
     }
     //_________________________________________________________________________
     //add comp block via state's active id
     _removeCompBlock() {
-      this._retarget(ACTIVE_STATE_COMP);
-      this._retarget(ACTIVE_COMP_BLOCK);
-      this._activeCompBlock.parentNode.removeChild(this._activeCompBlock);
-    }
-    //_________________________________________________________________________
-    //function description
-    _getAllCompBlocks() {
-      const allCompBlocks = this._allCompBlocks;
-      return allCompBlocks;
+      View.sActiveCompBlock.parentNode.removeChild(View.sActiveCompBlock);
     }
     //_________________________________________________________________________
   };
   var stackView_default = new stackView2();
+
+  // src/js/views/heightsView.js
+  var heightsView = class extends View {
+    _displayHeight = function(compButtonClickedName) {
+    };
+  };
+  var heightsView_default = new heightsView();
 
   // src/js/views/controlButtonsView.js
   var controlButtonsView = class extends View {
@@ -249,7 +274,6 @@
   var controlButtonsView_default = new controlButtonsView();
 
   // src/js/controller.js
-  console.log("BRANCH: main");
   var controlCompButtons = function(compButtonClickedName) {
     switch (compButtonClickedName) {
       case "plus":
@@ -271,6 +295,7 @@
       default:
         _configActiveStateComp(compButtonClickedName);
         stackView_default._configCompBlock(state);
+        heightsView_default._displayHeight(compButtonClickedName);
         break;
     }
   };

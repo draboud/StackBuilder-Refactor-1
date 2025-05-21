@@ -2,6 +2,9 @@ import * as model from "../model.js";
 
 export default class View {
   _data;
+  static sActiveStateComp;
+  static sActiveCompBlock;
+  static sAllCompBlocks;
   _activeStateComp;
   _activeCompBlock;
   _allCompBlocks;
@@ -10,18 +13,27 @@ export default class View {
     this._data = model.state;
     switch (comp) {
       case "_activeStateComp":
-        this._activeStateComp = this._data.stateCompsArray.find(
+        View.sActiveStateComp = this._data.stateCompsArray.find(
           (el) => el.id === this._data.activeId
         );
         break;
       case "_activeCompBlock":
-        this._activeCompBlock = document.querySelector(
+        View.sActiveCompBlock = document.querySelector(
           `#${this._data.activeId}`
         );
         break;
       case "_allCompBlocks":
-        this._allCompBlocks = document.querySelectorAll(".comp-div");
+        View.sAllCompBlocks = document.querySelectorAll(".comp-div");
         break;
     }
+  };
+  static getActiveStateBlock = function () {
+    return View.sActiveStateComp;
+  };
+  static getActiveCompBlock = function () {
+    return View.sActiveCompBlock;
+  };
+  static getAllCompBlocks = function () {
+    return View.sAllCompBlocks;
   };
 }

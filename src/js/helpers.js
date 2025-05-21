@@ -26,9 +26,18 @@ import * as model from "./model.js";
 // };
 //_________________________________________________________________________
 //for retargetting
-export const GET_COMP = {
-  compWrapper: ".comp-wrapper",
-  allCompDivs: ".comp-div",
-  compDivActive: ".comp-div.active",
-};
+// export const GET_COMP2 = {
+//   compWrapper: ".comp-wrapper",
+//   allCompDivs: ".comp-div",
+//   compDivActive: ".comp-div.active",
+// };
+//_________________________________________________________________________
+//for general retrieval
+// export const GET_COMP = function (comp) {
+//   switch(comp){
+//     case "_activeCompBlock":
+
+//   }
+// };
+
 //_________________________________________________________________________

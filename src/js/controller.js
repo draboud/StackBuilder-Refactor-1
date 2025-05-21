@@ -1,10 +1,11 @@
 import * as model from "./model.js";
 import compButtonsView from "./views/compButtonsView.js";
 import stackView from "./views/stackView.js";
+import heightsView from "./views/heightsView.js";
 import controlButtonsView from "./views/controlButtonsView.js";
-import { GET_COMP } from "./helpers.js";
+// import { GET_COMP } from "./helpers.js";
 
-console.log("BRANCH: main");
+// console.log("BRANCH: display height");
 
 const controlCompButtons = function (compButtonClickedName) {
   switch (compButtonClickedName) {
@@ -28,6 +29,7 @@ const controlCompButtons = function (compButtonClickedName) {
     default:
       model._configActiveStateComp(compButtonClickedName);
       stackView._configCompBlock(model.state);
+      heightsView._displayHeight(compButtonClickedName);
       break;
   }
 };
@@ -42,19 +44,12 @@ const init = function () {
   const testBtn = document.querySelector(".test_button");
   testBtn.addEventListener("click", function (e) {
     //........................................
-    // const allCompBlocks = stackView._getAllCompBlocks();
-    // allCompBlocks.forEach((el) => console.log(el));
     console.log("active state id: " + model.state.activeId);
     console.log("state array: ");
     model.state.stateCompsArray.forEach((el) => {
       console.log(el);
     });
     //........................................
-    // const myArr = [1, 2, 3, 4, 5];
-    // const myArrIndex = 2;
-    // myArr.splice(myArrIndex, 1);
-    // console.log("myArr: " + myArr);
-    // console.log("value at myArrIndex: " + myArr[myArrIndex]);
   });
   //..................................................................
 
