@@ -4,9 +4,8 @@ import stackView from "./views/stackView.js";
 import heightsView from "./views/heightsView.js";
 import controlButtonsView from "./views/controlButtonsView.js";
 import View from "./views/View.js";
-// import { GET_COMP } from "./helpers.js";
 
-console.log("BRANCH: main");
+console.log("BRANCH: display options");
 
 const controlCompButtons = function (compButtonClickedName) {
   switch (compButtonClickedName) {
