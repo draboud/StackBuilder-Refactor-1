@@ -6,7 +6,7 @@ import controlButtonsView from "./views/controlButtonsView.js";
 import View from "./views/View.js";
 // import { GET_COMP } from "./helpers.js";
 
-console.log("BRANCH: display height");
+console.log("BRANCH: main");
 
 const controlCompButtons = function (compButtonClickedName) {
   switch (compButtonClickedName) {

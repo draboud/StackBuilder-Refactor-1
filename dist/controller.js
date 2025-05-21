@@ -274,7 +274,7 @@
   var controlButtonsView_default = new controlButtonsView();
 
   // src/js/controller.js
-  console.log("BRANCH: display height");
+  console.log("BRANCH: main");
   var controlCompButtons = function(compButtonClickedName) {
     switch (compButtonClickedName) {
       case "plus":
