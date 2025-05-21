@@ -6,7 +6,7 @@ import optionsView from "./views/optionsView.js";
 import controlButtonsView from "./views/controlButtonsView.js";
 import View from "./views/View.js";
 
-// console.log("BRANCH: display options");
+console.log("BRANCH: main");
 
 const controlCompButtons = function (compButtonClickedName) {
   switch (compButtonClickedName) {
@@ -45,11 +45,11 @@ const init = function () {
   const testBtn = document.querySelector(".test_button");
   testBtn.addEventListener("click", function (e) {
     //........................................
-    // console.log("active state id: " + model.state.activeId);
-    // console.log("state array: ");
-    // model.state.stateCompsArray.forEach((el) => {
-    //   console.log(el);
-    // });
+    console.log("active state id: " + model.state.activeId);
+    console.log("state array: ");
+    model.state.stateCompsArray.forEach((el) => {
+      console.log(el);
+    });
     //........................................
   });
   //..................................................................

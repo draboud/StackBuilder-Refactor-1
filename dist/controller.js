@@ -305,6 +305,7 @@
   var controlButtonsView_default = new controlButtonsView();
 
   // src/js/controller.js
+  console.log("BRANCH: main");
   var controlCompButtons = function(compButtonClickedName) {
     switch (compButtonClickedName) {
       case "plus":
@@ -337,6 +338,11 @@
   var init = function() {
     const testBtn = document.querySelector(".test_button");
     testBtn.addEventListener("click", function(e) {
+      console.log("active state id: " + state.activeId);
+      console.log("state array: ");
+      state.stateCompsArray.forEach((el) => {
+        console.log(el);
+      });
     });
     _setActiveStateComp("c-1");
     stackView_default._setActiveCompBlock();
