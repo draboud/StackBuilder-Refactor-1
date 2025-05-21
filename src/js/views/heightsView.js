@@ -2,11 +2,16 @@ import View from "./View";
 import { _generateMarkup, COMP_HEIGHTS } from "../config";
 
 class heightsView extends View {
+  _activeHeightDiv;
+  _activeHeightText;
+
   _displayHeight = function () {
-    const activeHeightDiv = View.activeCompBlock.querySelector(".height-div");
-    activeHeightDiv.querySelector(".height-text").innerHTML =
-      COMP_HEIGHTS[View.activeCompType];
-    activeHeightDiv.classList.remove("hide");
+    this._activeHeightDiv = View.activeCompBlock.querySelector(".height-div");
+    this._activeHeightText =
+      this._activeHeightDiv.querySelector(".height-text");
+
+    this._activeHeightText.innerHTML = View.activeStateComp.height;
+    this._activeHeightDiv.classList.remove("hide");
   };
 }
 export default new heightsView();
