@@ -2,35 +2,35 @@ import * as model from "../model.js";
 
 export default class View {
   _data;
-  static sActiveStateComp;
-  static sActiveCompBlock;
-  static sAllCompBlocks;
+  static activeStateComp;
+  static activeCompBlock;
+  static allCompBlocks;
 
   _retarget = function (comp) {
     this._data = model.state;
     switch (comp) {
       case "_activeStateComp":
-        View.sActiveStateComp = this._data.stateCompsArray.find(
+        View.activeStateComp = this._data.stateCompsArray.find(
           (el) => el.id === this._data.activeId
         );
         break;
       case "_activeCompBlock":
-        View.sActiveCompBlock = document.querySelector(
+        View.activeCompBlock = document.querySelector(
           `#${this._data.activeId}`
         );
         break;
       case "_allCompBlocks":
-        View.sAllCompBlocks = document.querySelectorAll(".comp-div");
+        View.allCompBlocks = document.querySelectorAll(".comp-div");
         break;
     }
   };
   static getActiveStateBlock = function () {
-    return View.sActiveStateComp;
+    return View.activeStateComp;
   };
   static getActiveCompBlock = function () {
-    return View.sActiveCompBlock;
+    return View.activeCompBlock;
   };
   static getAllCompBlocks = function () {
-    return View.sAllCompBlocks;
+    return View.allCompBlocks;
   };
 }

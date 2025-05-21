@@ -1,12 +1,12 @@
 import View from "./View";
-import {
-  _generateMarkup,
-  ACTIVE_COMP_BLOCK,
-  ACTIVE_STATE_COMP,
-  ALL_COMP_BLOCKS,
-} from "../config";
+import { _generateMarkup, COMP_HEIGHTS } from "../config";
 
 class heightsView extends View {
-  _displayHeight = function (compButtonClickedName) {};
+  _displayHeight = function (compButtonClickedName) {
+    const activeHeightDiv = View.activeCompBlock.querySelector(".height-div");
+    activeHeightDiv.querySelector(".height-text").innerHTML =
+      COMP_HEIGHTS[compButtonClickedName];
+    activeHeightDiv.classList.remove("hide");
+  };
 }
 export default new heightsView();

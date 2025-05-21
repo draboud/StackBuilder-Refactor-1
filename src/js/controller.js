@@ -3,9 +3,10 @@ import compButtonsView from "./views/compButtonsView.js";
 import stackView from "./views/stackView.js";
 import heightsView from "./views/heightsView.js";
 import controlButtonsView from "./views/controlButtonsView.js";
+import View from "./views/View.js";
 // import { GET_COMP } from "./helpers.js";
 
-// console.log("BRANCH: display height");
+console.log("BRANCH: display height");
 
 const controlCompButtons = function (compButtonClickedName) {
   switch (compButtonClickedName) {
@@ -16,8 +17,7 @@ const controlCompButtons = function (compButtonClickedName) {
       stackView._setActiveCompBlock();
       break;
     case "minus":
-      let canRemoveComp;
-      canRemoveComp = model._removeStateComp();
+      let canRemoveComp = model._removeStateComp();
       if (canRemoveComp) {
         //check if comp is not 'c-1' (base comp)
         stackView._removeCompBlock();
@@ -44,12 +44,15 @@ const init = function () {
   const testBtn = document.querySelector(".test_button");
   testBtn.addEventListener("click", function (e) {
     //........................................
-    console.log("active state id: " + model.state.activeId);
-    console.log("state array: ");
-    model.state.stateCompsArray.forEach((el) => {
-      console.log(el);
-    });
+    // console.log("active state id: " + model.state.activeId);
+    // console.log("state array: ");
+    // model.state.stateCompsArray.forEach((el) => {
+    //   console.log(el);
+    // });
     //........................................
+    View.allCompBlocks.forEach((element) => {
+      console.log(element);
+    });
   });
   //..................................................................
 

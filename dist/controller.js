@@ -154,35 +154,35 @@
   // src/js/views/View.js
   var View = class _View {
     _data;
-    static sActiveStateComp;
-    static sActiveCompBlock;
-    static sAllCompBlocks;
+    static activeStateComp;
+    static activeCompBlock;
+    static allCompBlocks;
     _retarget = function(comp) {
       this._data = state;
       switch (comp) {
         case "_activeStateComp":
-          _View.sActiveStateComp = this._data.stateCompsArray.find(
+          _View.activeStateComp = this._data.stateCompsArray.find(
             (el) => el.id === this._data.activeId
           );
           break;
         case "_activeCompBlock":
-          _View.sActiveCompBlock = document.querySelector(
+          _View.activeCompBlock = document.querySelector(
             `#${this._data.activeId}`
           );
           break;
         case "_allCompBlocks":
-          _View.sAllCompBlocks = document.querySelectorAll(".comp-div");
+          _View.allCompBlocks = document.querySelectorAll(".comp-div");
           break;
       }
     };
     static getActiveStateBlock = function() {
-      return _View.sActiveStateComp;
+      return _View.activeStateComp;
     };
     static getActiveCompBlock = function() {
-      return _View.sActiveCompBlock;
+      return _View.activeCompBlock;
     };
     static getAllCompBlocks = function() {
-      return _View.sAllCompBlocks;
+      return _View.allCompBlocks;
     };
   };
 
@@ -218,14 +218,14 @@
       document.querySelectorAll(".comp-div").forEach((el) => {
         el.classList.remove("active");
       });
-      View.sActiveCompBlock.classList.add("active");
+      View.activeCompBlock.classList.add("active");
     }
     //_________________________________________________________________________
     //loops forwards through state array, backwards through comp blocks to keep id-1 at bottom
     _resetCompBlockIds() {
       this._retarget(ALL_COMP_BLOCKS);
       const stateDataArray = this._data.stateCompsArray;
-      const allCompBlocks = View.sAllCompBlocks;
+      const allCompBlocks = View.allCompBlocks;
       for (let i = 0; i < stateDataArray.length; i++) {
         allCompBlocks[i].id = stateDataArray[stateDataArray.length - 1 - i].id;
       }
@@ -233,21 +233,21 @@
     //_________________________________________________________________________
     //set active comp's image via state's active id
     _configCompBlock() {
-      View.sActiveCompBlock.querySelector(".img").srcset = View.sActiveStateComp.image;
+      View.activeCompBlock.querySelector(".img").srcset = View.activeStateComp.image;
     }
     //_________________________________________________________________________
     //add comp block via state's active id
     _addCompBlock() {
       this._retarget(ACTIVE_STATE_COMP);
-      View.sActiveCompBlock.insertAdjacentHTML(
+      View.activeCompBlock.insertAdjacentHTML(
         "beforebegin",
-        _generateMarkup(ACTIVE_COMP_BLOCK, View.sActiveStateComp)
+        _generateMarkup(ACTIVE_COMP_BLOCK, View.activeStateComp)
       );
     }
     //_________________________________________________________________________
     //add comp block via state's active id
     _removeCompBlock() {
-      View.sActiveCompBlock.parentNode.removeChild(View.sActiveCompBlock);
+      View.activeCompBlock.parentNode.removeChild(View.activeCompBlock);
     }
     //_________________________________________________________________________
   };
@@ -256,6 +256,9 @@
   // src/js/views/heightsView.js
   var heightsView = class extends View {
     _displayHeight = function(compButtonClickedName) {
+      const activeHeightDiv = View.activeCompBlock.querySelector(".height-div");
+      activeHeightDiv.querySelector(".height-text").innerHTML = COMP_HEIGHTS[compButtonClickedName];
+      activeHeightDiv.classList.remove("hide");
     };
   };
   var heightsView_default = new heightsView();
@@ -271,6 +274,7 @@
   var controlButtonsView_default = new controlButtonsView();
 
   // src/js/controller.js
+  console.log("BRANCH: display height");
   var controlCompButtons = function(compButtonClickedName) {
     switch (compButtonClickedName) {
       case "plus":
@@ -280,8 +284,7 @@
         stackView_default._setActiveCompBlock();
         break;
       case "minus":
-        let canRemoveComp;
-        canRemoveComp = _removeStateComp();
+        let canRemoveComp = _removeStateComp();
         if (canRemoveComp) {
           stackView_default._removeCompBlock();
           _resetAfterRemoval();
@@ -303,10 +306,8 @@
   var init = function() {
     const testBtn = document.querySelector(".test_button");
     testBtn.addEventListener("click", function(e) {
-      console.log("active state id: " + state.activeId);
-      console.log("state array: ");
-      state.stateCompsArray.forEach((el) => {
-        console.log(el);
+      View.allCompBlocks.forEach((element) => {
+        console.log(element);
       });
     });
     _setActiveStateComp("c-1");
