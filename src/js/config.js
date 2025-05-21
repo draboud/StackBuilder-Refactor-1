@@ -77,7 +77,7 @@ export const COMP_HEIGHTS = {
 //_________________________________________________________________________
 //Send in either '_activeCompBlock', '_activeCompSideBlock' for html element output
 export const _generateMarkup = function (compType, el) {
-  if (compType === "_activeCompBlock") {
+  if (compType === "activeCompBlock") {
     return `
     <div id=${el.id} class="comp-div">
       <div class="side_left_div hide">
@@ -102,7 +102,7 @@ export const _generateMarkup = function (compType, el) {
         </div>
     </div>`;
   }
-  if (compType === "_activeCompSideBlock") {
+  if (compType === "activeCompSideBlock") {
     return `
     <div class= "${stackView._sideFlag}_comp active">
       <img class="img_side" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png">
@@ -159,7 +159,8 @@ export const PDF_SETTINGS = {
 };
 //_________________________________________________________________________
 //for DOM retargeting
-export const ACTIVE_STATE_COMP = "_activeStateComp";
-export const ACTIVE_INDEX = "_activeIndex";
-export const ACTIVE_COMP_BLOCK = "_activeCompBlock";
-export const ALL_COMP_BLOCKS = "_allCompBlocks";
+export const ACTIVE_STATE_COMP = "activeStateComp";
+export const ACTIVE_INDEX = "activeIndex";
+export const ACTIVE_COMP_BLOCK = "activeCompBlock";
+export const ALL_COMP_BLOCKS = "allCompBlocks";
+export const ACTIVE_COMP_TYPE = "activeCompType";

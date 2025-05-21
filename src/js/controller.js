@@ -2,10 +2,11 @@ import * as model from "./model.js";
 import compButtonsView from "./views/compButtonsView.js";
 import stackView from "./views/stackView.js";
 import heightsView from "./views/heightsView.js";
+import optionsView from "./views/optionsView.js";
 import controlButtonsView from "./views/controlButtonsView.js";
 import View from "./views/View.js";
 
-console.log("BRANCH: display options");
+// console.log("BRANCH: display options");
 
 const controlCompButtons = function (compButtonClickedName) {
   switch (compButtonClickedName) {
@@ -27,8 +28,9 @@ const controlCompButtons = function (compButtonClickedName) {
       break;
     default:
       model._configActiveStateComp(compButtonClickedName);
-      stackView._configCompBlock(model.state);
+      stackView._configCompBlock();
       heightsView._displayHeight(compButtonClickedName);
+      optionsView._displayOptions(compButtonClickedName);
       break;
   }
 };

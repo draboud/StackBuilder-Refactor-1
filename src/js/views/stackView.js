@@ -40,6 +40,7 @@ class stackView extends View {
   //_________________________________________________________________________
   //set active comp's image via state's active id
   _configCompBlock() {
+    this._retarget(ALL_COMP_BLOCKS);
     View.activeCompBlock.querySelector(".img").srcset =
       View.activeStateComp.image;
   }

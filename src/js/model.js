@@ -6,11 +6,13 @@ import {
 } from "./config";
 
 let _activeStateComp;
+let _activeCompType;
 let _activeIndex;
 //_________________________________________________________________________
 //function description
 export let state = {
   activeId: "c-1",
+  activeCompType: "blank",
   stateCompsArray: [
     {
       active: true,
@@ -35,6 +37,7 @@ export const _setActiveStateComp = function (id) {
 //_________________________________________________________________________
 //function description
 export const _configActiveStateComp = function (compType) {
+  state.activeCompType = compType;
   _activeStateComp.height = COMP_HEIGHTS[compType];
   _activeStateComp.image = COMP_IMG[compType];
   _activeStateComp.options = {};
@@ -84,7 +87,7 @@ export const _resetAfterRemoval = function () {
 //function description
 export const _retarget = function (stateCompEl, id) {
   switch (stateCompEl) {
-    case "_activeStateComp":
+    case "activeStateComp":
       if (id) {
         _activeStateComp = state.stateCompsArray.find((el) => el.id === id);
       } else {
@@ -93,7 +96,7 @@ export const _retarget = function (stateCompEl, id) {
         );
       }
       break;
-    case "_activeIndex":
+    case "activeIndex":
       _activeIndex = state.stateCompsArray.indexOf(
         state.stateCompsArray.find((el) => el.id === id)
       );

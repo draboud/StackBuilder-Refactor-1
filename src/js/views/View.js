@@ -2,25 +2,30 @@ import * as model from "../model.js";
 
 export default class View {
   _data;
+  static activeCompType;
   static activeStateComp;
   static activeCompBlock;
   static allCompBlocks;
 
   _retarget = function (comp) {
     this._data = model.state;
+    View.activeCompType = this._data.activeCompType;
     switch (comp) {
-      case "_activeStateComp":
+      case "activeStateComp":
         View.activeStateComp = this._data.stateCompsArray.find(
           (el) => el.id === this._data.activeId
         );
         break;
-      case "_activeCompBlock":
+      case "activeCompBlock":
         View.activeCompBlock = document.querySelector(
           `#${this._data.activeId}`
         );
         break;
-      case "_allCompBlocks":
+      case "allCompBlocks":
         View.allCompBlocks = document.querySelectorAll(".comp-div");
+        break;
+      case "activeCompType":
+        View.activeCompType = this._data.activeCompType;
         break;
     }
   };

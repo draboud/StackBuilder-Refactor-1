@@ -32,7 +32,7 @@
     washington: 60
   };
   var _generateMarkup = function(compType, el) {
-    if (compType === "_activeCompBlock") {
+    if (compType === "activeCompBlock") {
       return `
     <div id=${el.id} class="comp-div">
       <div class="side_left_div hide">
@@ -57,7 +57,7 @@
         </div>
     </div>`;
     }
-    if (compType === "_activeCompSideBlock") {
+    if (compType === "activeCompSideBlock") {
       return `
     <div class= "${stackView._sideFlag}_comp active">
       <img class="img_side" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png">
@@ -65,16 +65,17 @@
     </div>`;
     }
   };
-  var ACTIVE_STATE_COMP = "_activeStateComp";
-  var ACTIVE_INDEX = "_activeIndex";
-  var ACTIVE_COMP_BLOCK = "_activeCompBlock";
-  var ALL_COMP_BLOCKS = "_allCompBlocks";
+  var ACTIVE_STATE_COMP = "activeStateComp";
+  var ACTIVE_INDEX = "activeIndex";
+  var ACTIVE_COMP_BLOCK = "activeCompBlock";
+  var ALL_COMP_BLOCKS = "allCompBlocks";
 
   // src/js/model.js
   var _activeStateComp;
   var _activeIndex;
   var state = {
     activeId: "c-1",
+    activeCompType: "blank",
     stateCompsArray: [
       {
         active: true,
@@ -95,6 +96,7 @@
     _retarget(ACTIVE_INDEX, state.activeId);
   };
   var _configActiveStateComp = function(compType) {
+    state.activeCompType = compType;
     _activeStateComp.height = COMP_HEIGHTS[compType];
     _activeStateComp.image = COMP_IMG[compType];
     _activeStateComp.options = {};
@@ -134,7 +136,7 @@
   };
   var _retarget = function(stateCompEl, id) {
     switch (stateCompEl) {
-      case "_activeStateComp":
+      case "activeStateComp":
         if (id) {
           _activeStateComp = state.stateCompsArray.find((el) => el.id === id);
         } else {
@@ -143,7 +145,7 @@
           );
         }
         break;
-      case "_activeIndex":
+      case "activeIndex":
         _activeIndex = state.stateCompsArray.indexOf(
           state.stateCompsArray.find((el) => el.id === id)
         );
@@ -154,24 +156,29 @@
   // src/js/views/View.js
   var View = class _View {
     _data;
+    static activeCompType;
     static activeStateComp;
     static activeCompBlock;
     static allCompBlocks;
     _retarget = function(comp) {
       this._data = state;
+      _View.activeCompType = this._data.activeCompType;
       switch (comp) {
-        case "_activeStateComp":
+        case "activeStateComp":
           _View.activeStateComp = this._data.stateCompsArray.find(
             (el) => el.id === this._data.activeId
           );
           break;
-        case "_activeCompBlock":
+        case "activeCompBlock":
           _View.activeCompBlock = document.querySelector(
             `#${this._data.activeId}`
           );
           break;
-        case "_allCompBlocks":
+        case "allCompBlocks":
           _View.allCompBlocks = document.querySelectorAll(".comp-div");
+          break;
+        case "activeCompType":
+          _View.activeCompType = this._data.activeCompType;
           break;
       }
     };
@@ -233,6 +240,7 @@
     //_________________________________________________________________________
     //set active comp's image via state's active id
     _configCompBlock() {
+      this._retarget(ALL_COMP_BLOCKS);
       View.activeCompBlock.querySelector(".img").srcset = View.activeStateComp.image;
     }
     //_________________________________________________________________________
@@ -263,6 +271,19 @@
   };
   var heightsView_default = new heightsView();
 
+  // src/js/views/optionsView.js
+  var optionsView = class extends View {
+    _displayOptions = function(compButtonClickedName) {
+      const activeOptsDiv = View.activeCompBlock.querySelector(".opts-div");
+      const activeOptsDivText = activeOptsDiv.querySelectorAll(".opts-text");
+      activeOptsDivText.forEach((el) => {
+        el.innerHTML = "test";
+      });
+      activeOptsDiv.classList.remove("hide");
+    };
+  };
+  var optionsView_default = new optionsView();
+
   // src/js/views/controlButtonsView.js
   var controlButtonsView = class extends View {
     _parentElement = document.querySelector(".control_buttons_div");
@@ -274,7 +295,6 @@
   var controlButtonsView_default = new controlButtonsView();
 
   // src/js/controller.js
-  console.log("BRANCH: display options");
   var controlCompButtons = function(compButtonClickedName) {
     switch (compButtonClickedName) {
       case "plus":
@@ -294,8 +314,9 @@
         break;
       default:
         _configActiveStateComp(compButtonClickedName);
-        stackView_default._configCompBlock(state);
+        stackView_default._configCompBlock();
         heightsView_default._displayHeight(compButtonClickedName);
+        optionsView_default._displayOptions(compButtonClickedName);
         break;
     }
   };
