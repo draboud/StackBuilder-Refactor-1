@@ -157,9 +157,6 @@
     static sActiveStateComp;
     static sActiveCompBlock;
     static sAllCompBlocks;
-    _activeStateComp;
-    _activeCompBlock;
-    _allCompBlocks;
     _retarget = function(comp) {
       this._data = state;
       switch (comp) {

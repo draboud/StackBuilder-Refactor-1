@@ -5,7 +5,6 @@ import {
   ACTIVE_STATE_COMP,
   ALL_COMP_BLOCKS,
 } from "../config";
-// super._activeCompBlock;
 
 class heightsView extends View {
   _displayHeight = function (compButtonClickedName) {};
