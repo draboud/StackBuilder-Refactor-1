@@ -29,8 +29,8 @@ const controlCompButtons = function (compButtonClickedName) {
     default:
       model._configActiveStateComp(compButtonClickedName);
       stackView._configCompBlock();
-      heightsView._displayHeight(compButtonClickedName);
-      optionsView._displayOptions(compButtonClickedName);
+      heightsView._displayHeight();
+      optionsView._displayOptions();
       break;
   }
 };
@@ -51,9 +51,6 @@ const init = function () {
     //   console.log(el);
     // });
     //........................................
-    View.allCompBlocks.forEach((element) => {
-      console.log(element);
-    });
   });
   //..................................................................
 

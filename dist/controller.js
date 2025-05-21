@@ -263,9 +263,9 @@
 
   // src/js/views/heightsView.js
   var heightsView = class extends View {
-    _displayHeight = function(compButtonClickedName) {
+    _displayHeight = function() {
       const activeHeightDiv = View.activeCompBlock.querySelector(".height-div");
-      activeHeightDiv.querySelector(".height-text").innerHTML = COMP_HEIGHTS[compButtonClickedName];
+      activeHeightDiv.querySelector(".height-text").innerHTML = COMP_HEIGHTS[View.activeCompType];
       activeHeightDiv.classList.remove("hide");
     };
   };
@@ -273,13 +273,23 @@
 
   // src/js/views/optionsView.js
   var optionsView = class extends View {
-    _displayOptions = function(compButtonClickedName) {
-      const activeOptsDiv = View.activeCompBlock.querySelector(".opts-div");
-      const activeOptsDivText = activeOptsDiv.querySelectorAll(".opts-text");
-      activeOptsDivText.forEach((el) => {
-        el.innerHTML = "test";
-      });
-      activeOptsDiv.classList.remove("hide");
+    _activeOptsDiv;
+    _activeOptsDiv1Text;
+    _activeOptsDivSpacer;
+    _activeOptsDiv2Text;
+    _displayOptions = function() {
+      this._activeOptsDiv = View.activeCompBlock.querySelector(".opts-div");
+      this._activeOptsDiv1Text = this._activeOptsDiv.querySelector(".opts-text");
+      this._activeOptsDivSpacer = this._activeOptsDiv.querySelector(".opts-spacer");
+      this._activeOptsDiv2Text = this._activeOptsDiv.querySelector(".opts-text.second");
+      if (View.activeCompType === "double") {
+        this._activeOptsDivSpacer.classList.remove("hide");
+        this._activeOptsDiv2Text.classList.remove("hide");
+      } else {
+        this._activeOptsDivSpacer.classList.add("hide");
+        this._activeOptsDiv2Text.classList.add("hide");
+      }
+      this._activeOptsDiv.classList.remove("hide");
     };
   };
   var optionsView_default = new optionsView();
@@ -315,8 +325,8 @@
       default:
         _configActiveStateComp(compButtonClickedName);
         stackView_default._configCompBlock();
-        heightsView_default._displayHeight(compButtonClickedName);
-        optionsView_default._displayOptions(compButtonClickedName);
+        heightsView_default._displayHeight();
+        optionsView_default._displayOptions();
         break;
     }
   };
@@ -327,9 +337,6 @@
   var init = function() {
     const testBtn = document.querySelector(".test_button");
     testBtn.addEventListener("click", function(e) {
-      View.allCompBlocks.forEach((element) => {
-        console.log(element);
-      });
     });
     _setActiveStateComp("c-1");
     stackView_default._setActiveCompBlock();

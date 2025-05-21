@@ -20,6 +20,9 @@ export default class View {
         View.activeCompBlock = document.querySelector(
           `#${this._data.activeId}`
         );
+        // View.activeCompBlock = document.getElementsByClassName(
+        //   `#${this._data.activeId}`
+        // );
         break;
       case "allCompBlocks":
         View.allCompBlocks = document.querySelectorAll(".comp-div");
