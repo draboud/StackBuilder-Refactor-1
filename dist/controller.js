@@ -69,6 +69,8 @@
   var ACTIVE_INDEX = "activeIndex";
   var ACTIVE_COMP_BLOCK = "activeCompBlock";
   var ALL_COMP_BLOCKS = "allCompBlocks";
+  var ACTIVE_HEIGHT_DIV = "activeHeightDiv";
+  var ACTIVE_HEIGHT_TEXT = "activeHeightText";
   var ACTIVE_OPTS_DIV = "activeOptsDiv";
   var ACTIVE_OPTS_TEXT_1 = "activeOptsText1";
   var ACTIVE_OPTS_TEXT_2 = "activeOptsText2";
@@ -185,6 +187,8 @@
     static activeStateComp;
     static activeCompBlock;
     static allCompBlocks;
+    static activeHeightDiv;
+    static activeHeightText;
     static activeOptsDiv;
     static activeOptsText1;
     static activeOptsSpacer;
@@ -211,6 +215,12 @@
           break;
         case "activeOptsDiv":
           _View.activeOptsDiv = _View.activeCompBlock.querySelector(".opts-div");
+          break;
+        case "activeHeightDiv":
+          _View.activeHeightDiv = _View.activeCompBlock.querySelector(".height-div");
+          break;
+        case "activeHeightText":
+          _View.activeHeightText = _View.activeCompBlock.querySelector(".height-text");
           break;
         case "activeOptsText1":
           _View.activeOptsText1 = _View.activeOptsDiv.querySelector(".opts-text");
@@ -304,13 +314,11 @@
 
   // src/js/views/heightsView.js
   var heightsView = class extends View {
-    _activeHeightDiv;
-    _activeHeightText;
     _displayHeight = function() {
-      this._activeHeightDiv = View.activeCompBlock.querySelector(".height-div");
-      this._activeHeightText = this._activeHeightDiv.querySelector(".height-text");
-      this._activeHeightText.innerHTML = View.activeStateComp.height;
-      this._activeHeightDiv.classList.remove("hide");
+      this._retarget(ACTIVE_HEIGHT_DIV);
+      this._retarget(ACTIVE_HEIGHT_TEXT);
+      View.activeHeightText.innerHTML = View.activeStateComp.height;
+      View.activeHeightDiv.classList.remove("hide");
     };
   };
   var heightsView_default = new heightsView();
@@ -349,7 +357,7 @@
   var controlButtonsView_default = new controlButtonsView();
 
   // src/js/controller.js
-  console.log("BRANCH: options-text-reference-model");
+  console.log("BRANCH: custom-height");
   var controlCompButtons = function(compButtonClickedName) {
     switch (compButtonClickedName) {
       case "plus":

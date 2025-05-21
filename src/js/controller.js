@@ -6,7 +6,7 @@ import optionsView from "./views/optionsView.js";
 import controlButtonsView from "./views/controlButtonsView.js";
 import View from "./views/View.js";
 
-console.log("BRANCH: options-text-reference-model");
+console.log("BRANCH: custom-height");
 
 const controlCompButtons = function (compButtonClickedName) {
   switch (compButtonClickedName) {

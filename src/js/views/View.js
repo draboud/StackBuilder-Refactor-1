@@ -6,6 +6,8 @@ export default class View {
   static activeStateComp;
   static activeCompBlock;
   static allCompBlocks;
+  static activeHeightDiv;
+  static activeHeightText;
   static activeOptsDiv;
   static activeOptsText1;
   static activeOptsSpacer;
@@ -33,6 +35,14 @@ export default class View {
         break;
       case "activeOptsDiv":
         View.activeOptsDiv = View.activeCompBlock.querySelector(".opts-div");
+        break;
+      case "activeHeightDiv":
+        View.activeHeightDiv =
+          View.activeCompBlock.querySelector(".height-div");
+        break;
+      case "activeHeightText":
+        View.activeHeightText =
+          View.activeCompBlock.querySelector(".height-text");
         break;
       case "activeOptsText1":
         View.activeOptsText1 = View.activeOptsDiv.querySelector(".opts-text");
