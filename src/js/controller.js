@@ -45,12 +45,13 @@ const init = function () {
   const testBtn = document.querySelector(".test_button");
   testBtn.addEventListener("click", function (e) {
     //........................................
-    console.log("active state id: " + model.state.activeId);
-    console.log("state array: ");
-    model.state.stateCompsArray.forEach((el) => {
-      console.log(el);
-    });
+    // console.log("active state id: " + model.state.activeId);
+    // console.log("state array: ");
+    // model.state.stateCompsArray.forEach((el) => {
+    //   console.log(el);
+    // });
     //........................................
+    optionsView._displayTest();
   });
   //..................................................................
 

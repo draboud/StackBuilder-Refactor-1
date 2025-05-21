@@ -164,3 +164,7 @@ export const ACTIVE_INDEX = "activeIndex";
 export const ACTIVE_COMP_BLOCK = "activeCompBlock";
 export const ALL_COMP_BLOCKS = "allCompBlocks";
 export const ACTIVE_COMP_TYPE = "activeCompType";
+export const ACTIVE_OPTS_DIV = "activeOptsDiv";
+export const ACTIVE_OPTS_TEXT_1 = "activeOptsText1";
+export const ACTIVE_OPTS_TEXT_2 = "activeOptsText2";
+export const ACTIVE_OPTS_SPACER = "activeOptsSpacer";

@@ -19,7 +19,14 @@ export let state = {
       id: `c-1`,
       image: COMP_IMG.blank,
       height: 0,
-      options: {},
+      options: {
+        default: "options",
+        label: "",
+        bore: "",
+        type: "",
+        range: "",
+        pressure: "",
+      },
     },
   ],
 };
@@ -40,7 +47,14 @@ export const _configActiveStateComp = function (compType) {
   state.activeCompType = compType;
   _activeStateComp.height = COMP_HEIGHTS[compType];
   _activeStateComp.image = COMP_IMG[compType];
-  _activeStateComp.options = {};
+  _activeStateComp.options = {
+    default: "options",
+    label: "",
+    bore: "",
+    type: "",
+    range: "",
+    pressure: "",
+  };
 };
 //_________________________________________________________________________
 //function description
@@ -60,7 +74,14 @@ export const _addStateComp = function () {
     id: "new",
     height: 0,
     image: COMP_IMG.blank,
-    options: {},
+    options: {
+      default: "options",
+      label: "",
+      bore: "",
+      type: "",
+      range: "",
+      pressure: "",
+    },
   };
   state.stateCompsArray.splice(_activeIndex + 1, 0, newStateComp);
   _resetStateCompIds();

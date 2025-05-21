@@ -69,6 +69,10 @@
   var ACTIVE_INDEX = "activeIndex";
   var ACTIVE_COMP_BLOCK = "activeCompBlock";
   var ALL_COMP_BLOCKS = "allCompBlocks";
+  var ACTIVE_OPTS_DIV = "activeOptsDiv";
+  var ACTIVE_OPTS_TEXT_1 = "activeOptsText1";
+  var ACTIVE_OPTS_TEXT_2 = "activeOptsText2";
+  var ACTIVE_OPTS_SPACER = "activeOptsSpacer";
 
   // src/js/model.js
   var _activeStateComp;
@@ -82,7 +86,14 @@
         id: `c-1`,
         image: COMP_IMG.blank,
         height: 0,
-        options: {}
+        options: {
+          default: "options",
+          label: "",
+          bore: "",
+          type: "",
+          range: "",
+          pressure: ""
+        }
       }
     ]
   };
@@ -99,7 +110,14 @@
     state.activeCompType = compType;
     _activeStateComp.height = COMP_HEIGHTS[compType];
     _activeStateComp.image = COMP_IMG[compType];
-    _activeStateComp.options = {};
+    _activeStateComp.options = {
+      default: "options",
+      label: "",
+      bore: "",
+      type: "",
+      range: "",
+      pressure: ""
+    };
   };
   var _resetStateCompIds = function() {
     let counter = 1;
@@ -115,7 +133,14 @@
       id: "new",
       height: 0,
       image: COMP_IMG.blank,
-      options: {}
+      options: {
+        default: "options",
+        label: "",
+        bore: "",
+        type: "",
+        range: "",
+        pressure: ""
+      }
     };
     state.stateCompsArray.splice(_activeIndex + 1, 0, newStateComp);
     _resetStateCompIds();
@@ -160,6 +185,10 @@
     static activeStateComp;
     static activeCompBlock;
     static allCompBlocks;
+    static activeOptsDiv;
+    static activeOptsText1;
+    static activeOptsSpacer;
+    static activeOptsText2;
     _retarget = function(comp) {
       this._data = state;
       _View.activeCompType = this._data.activeCompType;
@@ -179,6 +208,18 @@
           break;
         case "activeCompType":
           _View.activeCompType = this._data.activeCompType;
+          break;
+        case "activeOptsDiv":
+          _View.activeOptsDiv = _View.activeCompBlock.querySelector(".opts-div");
+          break;
+        case "activeOptsText1":
+          _View.activeOptsText1 = _View.activeOptsDiv.querySelector(".opts-text");
+          break;
+        case "activeOptsText2":
+          _View.activeOptsText2 = _View.activeOptsDiv.querySelector(".opts-text.second");
+          break;
+        case "activeOptsSpacer":
+          _View.activeOptsSpacer = _View.activeOptsDiv.querySelector(".opts-spacer");
           break;
       }
     };
@@ -276,23 +317,23 @@
 
   // src/js/views/optionsView.js
   var optionsView = class extends View {
-    _activeOptsDiv;
-    _activeOptsDiv1Text;
-    _activeOptsDivSpacer;
-    _activeOptsDiv2Text;
     _displayOptions = function() {
-      this._activeOptsDiv = View.activeCompBlock.querySelector(".opts-div");
-      this._activeOptsDiv1Text = this._activeOptsDiv.querySelector(".opts-text");
-      this._activeOptsDivSpacer = this._activeOptsDiv.querySelector(".opts-spacer");
-      this._activeOptsDiv2Text = this._activeOptsDiv.querySelector(".opts-text.second");
+      this._retarget(ACTIVE_OPTS_DIV);
+      this._retarget(ACTIVE_OPTS_TEXT_1);
+      this._retarget(ACTIVE_OPTS_TEXT_2);
+      this._retarget(ACTIVE_OPTS_SPACER);
       if (View.activeCompType === "double") {
-        this._activeOptsDivSpacer.classList.remove("hide");
-        this._activeOptsDiv2Text.classList.remove("hide");
+        View.activeOptsText2.innerHTML = View.activeStateComp.options["default"];
+        View.activeOptsSpacer.classList.remove("hide");
+        View.activeOptsText2.classList.remove("hide");
       } else {
-        this._activeOptsDivSpacer.classList.add("hide");
-        this._activeOptsDiv2Text.classList.add("hide");
+        View.activeOptsSpacer.classList.add("hide");
+        View.activeOptsText2.classList.add("hide");
       }
-      this._activeOptsDiv.classList.remove("hide");
+      View.activeOptsText1.innerHTML = View.activeStateComp.options["default"];
+      View.activeOptsDiv.classList.remove("hide");
+    };
+    _displayTest = function() {
     };
   };
   var optionsView_default = new optionsView();
@@ -341,11 +382,7 @@
   var init = function() {
     const testBtn = document.querySelector(".test_button");
     testBtn.addEventListener("click", function(e) {
-      console.log("active state id: " + state.activeId);
-      console.log("state array: ");
-      state.stateCompsArray.forEach((el) => {
-        console.log(el);
-      });
+      optionsView_default._displayTest();
     });
     _setActiveStateComp("c-1");
     stackView_default._setActiveCompBlock();

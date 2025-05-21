@@ -1,27 +1,29 @@
+import {
+  ACTIVE_OPTS_DIV,
+  ACTIVE_OPTS_SPACER,
+  ACTIVE_OPTS_TEXT_1,
+  ACTIVE_OPTS_TEXT_2,
+} from "../config";
 import View from "./View";
 
 class optionsView extends View {
-  _activeOptsDiv;
-  _activeOptsDiv1Text;
-  _activeOptsDivSpacer;
-  _activeOptsDiv2Text;
-
   _displayOptions = function () {
-    this._activeOptsDiv = View.activeCompBlock.querySelector(".opts-div");
-    this._activeOptsDiv1Text = this._activeOptsDiv.querySelector(".opts-text");
-    this._activeOptsDivSpacer =
-      this._activeOptsDiv.querySelector(".opts-spacer");
-    this._activeOptsDiv2Text =
-      this._activeOptsDiv.querySelector(".opts-text.second");
+    this._retarget(ACTIVE_OPTS_DIV);
+    this._retarget(ACTIVE_OPTS_TEXT_1);
+    this._retarget(ACTIVE_OPTS_TEXT_2);
+    this._retarget(ACTIVE_OPTS_SPACER);
 
     if (View.activeCompType === "double") {
-      this._activeOptsDivSpacer.classList.remove("hide");
-      this._activeOptsDiv2Text.classList.remove("hide");
+      View.activeOptsText2.innerHTML = View.activeStateComp.options["default"];
+      View.activeOptsSpacer.classList.remove("hide");
+      View.activeOptsText2.classList.remove("hide");
     } else {
-      this._activeOptsDivSpacer.classList.add("hide");
-      this._activeOptsDiv2Text.classList.add("hide");
+      View.activeOptsSpacer.classList.add("hide");
+      View.activeOptsText2.classList.add("hide");
     }
-    this._activeOptsDiv.classList.remove("hide");
+    View.activeOptsText1.innerHTML = View.activeStateComp.options["default"];
+    View.activeOptsDiv.classList.remove("hide");
   };
+  _displayTest = function () {};
 }
 export default new optionsView();
