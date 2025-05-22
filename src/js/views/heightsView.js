@@ -25,7 +25,7 @@ class heightsView extends View {
   }
   //_________________________________________________________________________
   //enter height - arrow function for 'this' to access global fields
-  addHandlerHeightModal(handler) {
+  addHandlerHeightForm(handler) {
     this._heightForm.addEventListener("submit", (e) => {
       e.preventDefault();
       handler(this._heightInput.value);
@@ -56,8 +56,6 @@ class heightsView extends View {
   //_________________________________________________________________________
   //reveal height div
   displayHeight = function () {
-    this._retarget(ACTIVE_HEIGHT_DIV);
-    View.activeHeightText.innerHTML = View.activeStateComp.height;
     View.activeHeightDiv.classList.remove("hide");
   };
   //_________________________________________________________________________
@@ -68,8 +66,13 @@ class heightsView extends View {
   //_________________________________________________________________________
   //can be called outside the class
   configHeightValue() {
-    this._retarget(ACTIVE_HEIGHT_DIV);
-    View.activeHeightText.innerHTML = this._heightInput.value;
+    this.retarget(ACTIVE_HEIGHT_DIV);
+    if (this._heightInput.value) {
+      //if user input value, otherwise use default from config
+      View.activeHeightText.innerHTML = this._heightInput.value + '"';
+    } else {
+      View.activeHeightText.innerHTML = View.activeStateComp.height + '"';
+    }
   }
   //_________________________________________________________________________
 }

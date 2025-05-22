@@ -24,7 +24,7 @@ export default class View {
   };
   //_________________________________________________________________________
   //target most recent of the comp passed in
-  _retarget = function (comp) {
+  retarget = function (comp) {
     this._data = model.state;
     View.activeCompType = this._data.activeCompType;
     switch (comp) {
@@ -53,10 +53,10 @@ export default class View {
       case "activeOptsDiv":
         View.activeOptsDiv = View.activeCompBlock.querySelector(".opts-div");
         View.activeOptsText1 = View.activeOptsDiv.querySelector(".opts-text");
-        View.activeOptsText2 =
-          View.activeOptsDiv.querySelector(".opts-text.second");
         View.activeOptsSpacer =
           View.activeOptsDiv.querySelector(".opts-spacer");
+        View.activeOptsText2 =
+          View.activeOptsDiv.querySelector(".opts-text.second");
         break;
     }
   };

@@ -6,7 +6,6 @@ import {
 } from "./config";
 
 let _activeStateComp;
-let _activeCompType;
 let _activeIndex;
 //_________________________________________________________________________
 //function description
@@ -123,4 +122,10 @@ export const _retarget = function (stateCompEl, id) {
       );
       break;
   }
+  //_________________________________________________________________________
 };
+//adjust state comp height after user changes it
+export const configActiveStateCompHeight = function (userEnteredHeight) {
+  _activeStateComp.height = userEnteredHeight;
+};
+//_________________________________________________________________________

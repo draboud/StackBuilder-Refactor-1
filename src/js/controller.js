@@ -6,7 +6,7 @@ import optionsView from "./views/optionsView.js";
 import controlButtonsView from "./views/controlButtonsView.js";
 import View from "./views/View.js";
 
-console.log("BRANCH: options-modal");
+// console.log("BRANCH: options-modal");
 //_________________________________________________________________________
 //comp button handler
 const controlCompButtons = function (compButtonClickedName) {
@@ -30,6 +30,7 @@ const controlCompButtons = function (compButtonClickedName) {
     default:
       model.configActiveStateComp(compButtonClickedName);
       stackView.configCompBlock();
+      heightsView.configHeightValue();
       heightsView.displayHeight();
       optionsView.displayOptions();
       break;
@@ -49,8 +50,9 @@ const controlHeightClick = function () {
 };
 //_________________________________________________________________________
 //hide height modal, height value entered
-const controlHeightModal = function (heightValue) {
+const controlHeightForm = function (heightValue) {
   heightsView.configHeightValue(heightValue);
+  model.configActiveStateCompHeight(heightValue);
   heightsView.toggleHeightModal();
   View.toggleModalBlockout();
 };
@@ -67,6 +69,22 @@ const controlModalBlockout = function () {
     heightsView.toggleHeightModal();
     heightsView.clearHeightValue();
   }
+  if (optionsView.isOptsModalOpen) {
+    optionsView.toggleOptsModal();
+  }
+  View.toggleModalBlockout();
+};
+//_________________________________________________________________________
+//description
+const controlOptsClick = function (optClicked) {
+  console.log(optClicked.classList.contains("second"));
+  optionsView.toggleOptsModal();
+  View.toggleModalBlockout();
+};
+//_________________________________________________________________________
+//description
+const controlOptsModalBtn = function () {
+  optionsView.toggleOptsModal();
   View.toggleModalBlockout();
 };
 //_________________________________________________________________________
@@ -76,13 +94,12 @@ const init = function () {
   const testBtn = document.querySelector(".test_button");
   testBtn.addEventListener("click", function (e) {
     //........................................
-    // console.log("active state id: " + model.state.activeId);
-    // console.log("state array: ");
-    // model.state.stateCompsArray.forEach((el) => {
-    //   console.log(el);
-    // });
+    console.log("active state id: " + model.state.activeId);
+    console.log("state array: ");
+    model.state.stateCompsArray.forEach((el) => {
+      console.log(el);
+    });
     //........................................
-    optionsView.displayTest();
   });
   //..................................................................
 
@@ -94,7 +111,9 @@ const init = function () {
   stackView.addHandlerCompClick(controlCompClick);
   View.addHandlerModalBlockout(controlModalBlockout);
   heightsView.addHandlerHeightClick(controlHeightClick);
-  heightsView.addHandlerHeightModal(controlHeightModal);
+  heightsView.addHandlerHeightForm(controlHeightForm);
   heightsView.addHandlerHeightModalBtn(controlHeightModalBtn);
+  optionsView.addHandlerOptsClick(controlOptsClick);
+  optionsView.addHandlerOptsModalBtn(controlOptsModalBtn);
 };
 init();
