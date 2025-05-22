@@ -16,8 +16,8 @@ export let state = {
     {
       active: true,
       id: `c-1`,
-      image: COMP_IMG.blank,
       height: 0,
+      image: COMP_IMG.blank,
       options: {
         default: "options",
         label: "",
