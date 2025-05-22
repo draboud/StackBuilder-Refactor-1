@@ -2,6 +2,7 @@ import * as model from "../model.js";
 
 export default class View {
   _data;
+  static _modalBlockout = document.querySelector(".modal_blockout");
   static activeCompType;
   static activeStateComp;
   static activeCompBlock;
@@ -12,7 +13,17 @@ export default class View {
   static activeOptsText1;
   static activeOptsSpacer;
   static activeOptsText2;
-
+  //_________________________________________________________________________
+  //modal blackout gets click event to close any open modal and hide itself
+  static _addHandlerModalBlockout = (handler) => {
+    this._modalBlockout.addEventListener("click", function (e) {
+      const clicked = e.target.closest(".modal_blockout");
+      if (!clicked) return;
+      handler();
+    });
+  };
+  //_________________________________________________________________________
+  //target most recent of the comp passed in
   _retarget = function (comp) {
     this._data = model.state;
     View.activeCompType = this._data.activeCompType;
@@ -33,37 +44,25 @@ export default class View {
       case "activeCompType":
         View.activeCompType = this._data.activeCompType;
         break;
-      case "activeOptsDiv":
-        View.activeOptsDiv = View.activeCompBlock.querySelector(".opts-div");
-        break;
       case "activeHeightDiv":
         View.activeHeightDiv =
           View.activeCompBlock.querySelector(".height-div");
-        break;
-      case "activeHeightText":
         View.activeHeightText =
           View.activeCompBlock.querySelector(".height-text");
         break;
-      case "activeOptsText1":
+      case "activeOptsDiv":
+        View.activeOptsDiv = View.activeCompBlock.querySelector(".opts-div");
         View.activeOptsText1 = View.activeOptsDiv.querySelector(".opts-text");
-        break;
-      case "activeOptsText2":
         View.activeOptsText2 =
           View.activeOptsDiv.querySelector(".opts-text.second");
-        break;
-      case "activeOptsSpacer":
         View.activeOptsSpacer =
           View.activeOptsDiv.querySelector(".opts-spacer");
         break;
     }
   };
-  static getActiveStateBlock = function () {
-    return View.activeStateComp;
-  };
-  static getActiveCompBlock = function () {
-    return View.activeCompBlock;
-  };
-  static getAllCompBlocks = function () {
-    return View.allCompBlocks;
+  //_________________________________________________________________________
+  //open/close modal blockout
+  static toggleModalBlockout = () => {
+    this._modalBlockout.classList.toggle("hide");
   };
 }

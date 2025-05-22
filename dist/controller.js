@@ -70,7 +70,6 @@
   var ACTIVE_COMP_BLOCK = "activeCompBlock";
   var ALL_COMP_BLOCKS = "allCompBlocks";
   var ACTIVE_HEIGHT_DIV = "activeHeightDiv";
-  var ACTIVE_HEIGHT_TEXT = "activeHeightText";
   var ACTIVE_OPTS_DIV = "activeOptsDiv";
   var ACTIVE_OPTS_TEXT_1 = "activeOptsText1";
   var ACTIVE_OPTS_TEXT_2 = "activeOptsText2";
@@ -183,6 +182,7 @@
   // src/js/views/View.js
   var View = class _View {
     _data;
+    static _modalBlockout = document.querySelector(".modal_blockout");
     static activeCompType;
     static activeStateComp;
     static activeCompBlock;
@@ -193,6 +193,17 @@
     static activeOptsText1;
     static activeOptsSpacer;
     static activeOptsText2;
+    //_________________________________________________________________________
+    //modal blackout gets click event to close any open modal and hide itself
+    static _addHandlerModalBlockout = (handler) => {
+      this._modalBlockout.addEventListener("click", function(e) {
+        const clicked = e.target.closest(".modal_blockout");
+        if (!clicked) return;
+        handler();
+      });
+    };
+    //_________________________________________________________________________
+    //target most recent of the comp passed in
     _retarget = function(comp) {
       this._data = state;
       _View.activeCompType = this._data.activeCompType;
@@ -213,34 +224,22 @@
         case "activeCompType":
           _View.activeCompType = this._data.activeCompType;
           break;
-        case "activeOptsDiv":
-          _View.activeOptsDiv = _View.activeCompBlock.querySelector(".opts-div");
-          break;
         case "activeHeightDiv":
           _View.activeHeightDiv = _View.activeCompBlock.querySelector(".height-div");
-          break;
-        case "activeHeightText":
           _View.activeHeightText = _View.activeCompBlock.querySelector(".height-text");
           break;
-        case "activeOptsText1":
+        case "activeOptsDiv":
+          _View.activeOptsDiv = _View.activeCompBlock.querySelector(".opts-div");
           _View.activeOptsText1 = _View.activeOptsDiv.querySelector(".opts-text");
-          break;
-        case "activeOptsText2":
           _View.activeOptsText2 = _View.activeOptsDiv.querySelector(".opts-text.second");
-          break;
-        case "activeOptsSpacer":
           _View.activeOptsSpacer = _View.activeOptsDiv.querySelector(".opts-spacer");
           break;
       }
     };
-    static getActiveStateBlock = function() {
-      return _View.activeStateComp;
-    };
-    static getActiveCompBlock = function() {
-      return _View.activeCompBlock;
-    };
-    static getAllCompBlocks = function() {
-      return _View.allCompBlocks;
+    //_________________________________________________________________________
+    //open/close modal blockout
+    static toggleModalBlockout = () => {
+      this._modalBlockout.classList.toggle("hide");
     };
   };
 
@@ -314,12 +313,70 @@
 
   // src/js/views/heightsView.js
   var heightsView = class extends View {
+    _parentElement = document.querySelector(".comp-wrapper");
+    _heightModal = document.querySelector(".height_modal");
+    _heightInput = document.querySelector(".height_input");
+    _heightForm = document.querySelector(".heightForm");
+    _heightValue;
+    isHeightModalOpen = false;
+    //_________________________________________________________________________
+    //click events for height div
+    _addHandlerHeightClick(handler) {
+      this._parentElement.addEventListener("click", function(e) {
+        const clicked = e.target.closest(".height-div");
+        if (!clicked) return;
+        handler();
+      });
+    }
+    //_________________________________________________________________________
+    //enter height - arrow function for 'this' to access global fields
+    _addHandlerHeightModal(handler) {
+      this._heightForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        handler(this._heightInput.value);
+        this.clearHeightValue();
+      });
+    }
+    //_________________________________________________________________________
+    //close height modal- arrow function for 'this' to access global fields
+    _addHandlerHeightModalBtn(handler) {
+      this._heightModal.addEventListener("click", (e) => {
+        const clicked = e.target.closest(".modal_close_button");
+        if (!clicked) return;
+        this.clearHeightValue();
+        handler(this._heightInput.value);
+      });
+    }
+    //_________________________________________________________________________
+    //open/close height modal
+    _toggleHeightModal() {
+      this._heightModal.classList.toggle("hide");
+      if (this._heightModal.classList.contains("hide")) {
+        this.isHeightModalOpen = false;
+      } else {
+        this.isHeightModalOpen = true;
+        this._heightInput.focus();
+      }
+    }
+    //_________________________________________________________________________
+    //reveal height div
     _displayHeight = function() {
       this._retarget(ACTIVE_HEIGHT_DIV);
-      this._retarget(ACTIVE_HEIGHT_TEXT);
       View.activeHeightText.innerHTML = View.activeStateComp.height;
       View.activeHeightDiv.classList.remove("hide");
     };
+    //_________________________________________________________________________
+    //can be called outside the class
+    clearHeightValue() {
+      this._heightInput.value = "";
+    }
+    //_________________________________________________________________________
+    //can be called outside the class
+    configHeightValue() {
+      this._retarget(ACTIVE_HEIGHT_DIV);
+      View.activeHeightText.innerHTML = this._heightInput.value;
+    }
+    //_________________________________________________________________________
   };
   var heightsView_default = new heightsView();
 
@@ -387,6 +444,26 @@
     _setActiveStateComp(compClickedId);
     stackView_default._setActiveCompBlock();
   };
+  var controlHeightClick = function() {
+    heightsView_default._toggleHeightModal();
+    View.toggleModalBlockout();
+  };
+  var controlHeightModal = function(heightValue) {
+    heightsView_default.configHeightValue(heightValue);
+    heightsView_default._toggleHeightModal();
+    View.toggleModalBlockout();
+  };
+  var controlHeightModalBtn = function() {
+    heightsView_default._toggleHeightModal();
+    View.toggleModalBlockout();
+  };
+  var controlModalBlockout = function() {
+    if (heightsView_default.isHeightModalOpen) {
+      heightsView_default._toggleHeightModal();
+      heightsView_default.clearHeightValue();
+    }
+    View.toggleModalBlockout();
+  };
   var init = function() {
     const testBtn = document.querySelector(".test_button");
     testBtn.addEventListener("click", function(e) {
@@ -396,6 +473,10 @@
     stackView_default._setActiveCompBlock();
     compButtonsView_default._addHandlerCompButtons(controlCompButtons);
     stackView_default._addHandlerCompClick(controlCompClick);
+    View._addHandlerModalBlockout(controlModalBlockout);
+    heightsView_default._addHandlerHeightClick(controlHeightClick);
+    heightsView_default._addHandlerHeightModal(controlHeightModal);
+    heightsView_default._addHandlerHeightModalBtn(controlHeightModalBtn);
   };
   init();
 })();
