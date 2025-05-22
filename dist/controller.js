@@ -407,6 +407,15 @@
     };
     //_________________________________________________________________________
     //description
+    addHandlerOptsModalOpts = function(handler) {
+      this._optsModal.addEventListener("click", (e) => {
+        const clicked = e.target.closest(".opt_div");
+        if (!clicked) return;
+        handler(clicked);
+      });
+    };
+    //_________________________________________________________________________
+    //description
     configOptions = function() {
     };
     //_________________________________________________________________________
@@ -513,6 +522,10 @@
     optionsView_default.toggleOptsModal();
     View.toggleModalBlockout();
   };
+  var controlOptsModalOpts = function(clickedOpt) {
+    console.log(clickedOpt.firstChild.innerHTML);
+    clickedOpt.firstChild.classList.add("selected");
+  };
   var init = function() {
     const testBtn = document.querySelector(".test_button");
     testBtn.addEventListener("click", function(e) {
@@ -532,6 +545,7 @@
     heightsView_default.addHandlerHeightModalBtn(controlHeightModalBtn);
     optionsView_default.addHandlerOptsClick(controlOptsClick);
     optionsView_default.addHandlerOptsModalBtn(controlOptsModalBtn);
+    optionsView_default.addHandlerOptsModalOpts(controlOptsModalOpts);
   };
   init();
 })();

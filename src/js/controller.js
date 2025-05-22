@@ -88,6 +88,12 @@ const controlOptsModalBtn = function () {
   View.toggleModalBlockout();
 };
 //_________________________________________________________________________
+//description
+const controlOptsModalOpts = function (clickedOpt) {
+  console.log(clickedOpt.firstChild.innerHTML);
+  clickedOpt.firstChild.classList.add("selected");
+};
+//_________________________________________________________________________
 //initialization
 const init = function () {
   //..................................................................
@@ -115,5 +121,6 @@ const init = function () {
   heightsView.addHandlerHeightModalBtn(controlHeightModalBtn);
   optionsView.addHandlerOptsClick(controlOptsClick);
   optionsView.addHandlerOptsModalBtn(controlOptsModalBtn);
+  optionsView.addHandlerOptsModalOpts(controlOptsModalOpts);
 };
 init();

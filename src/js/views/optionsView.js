@@ -26,6 +26,15 @@ class optionsView extends View {
   };
   //_________________________________________________________________________
   //description
+  addHandlerOptsModalOpts = function (handler) {
+    this._optsModal.addEventListener("click", (e) => {
+      const clicked = e.target.closest(".opt_div");
+      if (!clicked) return;
+      handler(clicked);
+    });
+  };
+  //_________________________________________________________________________
+  //description
   configOptions = function () {};
   //_________________________________________________________________________
   //description
