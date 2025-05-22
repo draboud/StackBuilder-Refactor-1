@@ -35,6 +35,15 @@ class optionsView extends View {
   };
   //_________________________________________________________________________
   //description
+  addHandlerReviseBtn = function (handler) {
+    this._optsModal.addEventListener("click", (e) => {
+      const clicked = e.target.closest(".revise_button");
+      if (!clicked) return;
+      handler();
+    });
+  };
+  //_________________________________________________________________________
+  //description
   configOptions = function () {};
   //_________________________________________________________________________
   //description

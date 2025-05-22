@@ -94,6 +94,11 @@ const controlOptsModalOpts = function (clickedOpt) {
   clickedOpt.firstChild.classList.add("selected");
 };
 //_________________________________________________________________________
+//description
+const controlReviseBtn = function () {
+  console.log("revise button pressed");
+};
+//_________________________________________________________________________
 //initialization
 const init = function () {
   //..................................................................
@@ -122,5 +127,6 @@ const init = function () {
   optionsView.addHandlerOptsClick(controlOptsClick);
   optionsView.addHandlerOptsModalBtn(controlOptsModalBtn);
   optionsView.addHandlerOptsModalOpts(controlOptsModalOpts);
+  optionsView.addHandlerReviseBtn(controlReviseBtn);
 };
 init();

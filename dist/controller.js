@@ -416,6 +416,15 @@
     };
     //_________________________________________________________________________
     //description
+    addHandlerReviseBtn = function(handler) {
+      this._optsModal.addEventListener("click", (e) => {
+        const clicked = e.target.closest(".revise_button");
+        if (!clicked) return;
+        handler();
+      });
+    };
+    //_________________________________________________________________________
+    //description
     configOptions = function() {
     };
     //_________________________________________________________________________
@@ -526,6 +535,9 @@
     console.log(clickedOpt.firstChild.innerHTML);
     clickedOpt.firstChild.classList.add("selected");
   };
+  var controlReviseBtn = function() {
+    console.log("revise button pressed");
+  };
   var init = function() {
     const testBtn = document.querySelector(".test_button");
     testBtn.addEventListener("click", function(e) {
@@ -546,6 +558,7 @@
     optionsView_default.addHandlerOptsClick(controlOptsClick);
     optionsView_default.addHandlerOptsModalBtn(controlOptsModalBtn);
     optionsView_default.addHandlerOptsModalOpts(controlOptsModalOpts);
+    optionsView_default.addHandlerReviseBtn(controlReviseBtn);
   };
   init();
 })();
