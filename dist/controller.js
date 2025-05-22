@@ -98,7 +98,7 @@
       }
     ]
   };
-  var _setActiveStateComp = function(id) {
+  var setActiveStateComp = function(id) {
     state.stateCompsArray.forEach((el) => {
       el.active = false;
     });
@@ -107,7 +107,7 @@
     state.activeId = id;
     _retarget(ACTIVE_INDEX, state.activeId);
   };
-  var _configActiveStateComp = function(compType) {
+  var configActiveStateComp = function(compType) {
     state.activeCompType = compType;
     _activeStateComp.height = COMP_HEIGHTS[compType];
     _activeStateComp.image = COMP_IMG[compType];
@@ -120,7 +120,7 @@
       pressure: ""
     };
   };
-  var _resetStateCompIds = function() {
+  var resetStateCompIds = function() {
     let counter = 1;
     for (let i = 0; i < state.stateCompsArray.length; i++) {
       if (state.stateCompsArray[i].id === "new") state.activeId = `c-${counter}`;
@@ -128,7 +128,7 @@
       counter++;
     }
   };
-  var _addStateComp = function() {
+  var addStateComp = function() {
     const newStateComp = {
       active: false,
       id: "new",
@@ -144,10 +144,10 @@
       }
     };
     state.stateCompsArray.splice(_activeIndex + 1, 0, newStateComp);
-    _resetStateCompIds();
-    _setActiveStateComp(state.activeId);
+    resetStateCompIds();
+    setActiveStateComp(state.activeId);
   };
-  var _removeStateComp = function() {
+  var removeStateComp = function() {
     if (_activeStateComp.id != "c-1") {
       state.stateCompsArray.splice(_activeIndex, 1);
       return true;
@@ -156,9 +156,9 @@
       return false;
     }
   };
-  var _resetAfterRemoval = function() {
-    _setActiveStateComp(state.stateCompsArray[_activeIndex - 1].id);
-    _resetStateCompIds();
+  var resetAfterRemoval = function() {
+    setActiveStateComp(state.stateCompsArray[_activeIndex - 1].id);
+    resetStateCompIds();
   };
   var _retarget = function(stateCompEl, id) {
     switch (stateCompEl) {
@@ -195,7 +195,7 @@
     static activeOptsText2;
     //_________________________________________________________________________
     //modal blackout gets click event to close any open modal and hide itself
-    static _addHandlerModalBlockout = (handler) => {
+    static addHandlerModalBlockout = (handler) => {
       this._modalBlockout.addEventListener("click", function(e) {
         const clicked = e.target.closest(".modal_blockout");
         if (!clicked) return;
@@ -246,7 +246,7 @@
   // src/js/views/compButtonsView.js
   var compButtonsView = class extends View {
     _parentElement = document.querySelector(".vert_buttons_div");
-    _addHandlerCompButtons(handler) {
+    addHandlerCompButtons(handler) {
       this._parentElement.addEventListener("click", function(e) {
         const compButtonClicked = e.target.closest(".comp_button");
         if (!compButtonClicked) return;
@@ -260,7 +260,7 @@
   var stackView2 = class extends View {
     _parentElement = document.querySelector(".comp-wrapper");
     //click events for all comp blocks
-    _addHandlerCompClick(handler) {
+    addHandlerCompClick(handler) {
       this._parentElement.addEventListener("click", function(e) {
         const compClicked = e.target.closest(".comp-div");
         if (!compClicked) return;
@@ -269,7 +269,7 @@
     }
     //_________________________________________________________________________
     //add active class to comp block via state's active id
-    _setActiveCompBlock() {
+    setActiveCompBlock() {
       this._retarget(ACTIVE_STATE_COMP);
       this._retarget(ACTIVE_COMP_BLOCK);
       document.querySelectorAll(".comp-div").forEach((el) => {
@@ -279,7 +279,7 @@
     }
     //_________________________________________________________________________
     //loops forwards through state array, backwards through comp blocks to keep id-1 at bottom
-    _resetCompBlockIds() {
+    resetCompBlockIds() {
       this._retarget(ALL_COMP_BLOCKS);
       const stateDataArray = this._data.stateCompsArray;
       const allCompBlocks = View.allCompBlocks;
@@ -289,13 +289,13 @@
     }
     //_________________________________________________________________________
     //set active comp's image via state's active id
-    _configCompBlock() {
+    configCompBlock() {
       this._retarget(ALL_COMP_BLOCKS);
       View.activeCompBlock.querySelector(".img").srcset = View.activeStateComp.image;
     }
     //_________________________________________________________________________
     //add comp block via state's active id
-    _addCompBlock() {
+    addCompBlock() {
       this._retarget(ACTIVE_STATE_COMP);
       View.activeCompBlock.insertAdjacentHTML(
         "beforebegin",
@@ -304,7 +304,7 @@
     }
     //_________________________________________________________________________
     //add comp block via state's active id
-    _removeCompBlock() {
+    removeCompBlock() {
       View.activeCompBlock.parentNode.removeChild(View.activeCompBlock);
     }
     //_________________________________________________________________________
@@ -321,7 +321,7 @@
     isHeightModalOpen = false;
     //_________________________________________________________________________
     //click events for height div
-    _addHandlerHeightClick(handler) {
+    addHandlerHeightClick(handler) {
       this._parentElement.addEventListener("click", function(e) {
         const clicked = e.target.closest(".height-div");
         if (!clicked) return;
@@ -330,7 +330,7 @@
     }
     //_________________________________________________________________________
     //enter height - arrow function for 'this' to access global fields
-    _addHandlerHeightModal(handler) {
+    addHandlerHeightModal(handler) {
       this._heightForm.addEventListener("submit", (e) => {
         e.preventDefault();
         handler(this._heightInput.value);
@@ -339,7 +339,7 @@
     }
     //_________________________________________________________________________
     //close height modal- arrow function for 'this' to access global fields
-    _addHandlerHeightModalBtn(handler) {
+    addHandlerHeightModalBtn(handler) {
       this._heightModal.addEventListener("click", (e) => {
         const clicked = e.target.closest(".modal_close_button");
         if (!clicked) return;
@@ -349,7 +349,7 @@
     }
     //_________________________________________________________________________
     //open/close height modal
-    _toggleHeightModal() {
+    toggleHeightModal() {
       this._heightModal.classList.toggle("hide");
       if (this._heightModal.classList.contains("hide")) {
         this.isHeightModalOpen = false;
@@ -360,7 +360,7 @@
     }
     //_________________________________________________________________________
     //reveal height div
-    _displayHeight = function() {
+    displayHeight = function() {
       this._retarget(ACTIVE_HEIGHT_DIV);
       View.activeHeightText.innerHTML = View.activeStateComp.height;
       View.activeHeightDiv.classList.remove("hide");
@@ -414,52 +414,52 @@
   var controlButtonsView_default = new controlButtonsView();
 
   // src/js/controller.js
-  console.log("BRANCH: custom-height");
+  console.log("BRANCH: options-modal");
   var controlCompButtons = function(compButtonClickedName) {
     switch (compButtonClickedName) {
       case "plus":
-        _addStateComp();
-        stackView_default._addCompBlock();
-        stackView_default._resetCompBlockIds();
-        stackView_default._setActiveCompBlock();
+        addStateComp();
+        stackView_default.addCompBlock();
+        stackView_default.resetCompBlockIds();
+        stackView_default.setActiveCompBlock();
         break;
       case "minus":
-        let canRemoveComp = _removeStateComp();
+        let canRemoveComp = removeStateComp();
         if (canRemoveComp) {
-          stackView_default._removeCompBlock();
-          _resetAfterRemoval();
-          stackView_default._resetCompBlockIds();
-          stackView_default._setActiveCompBlock();
+          stackView_default.removeCompBlock();
+          resetAfterRemoval();
+          stackView_default.resetCompBlockIds();
+          stackView_default.setActiveCompBlock();
         }
         break;
       default:
-        _configActiveStateComp(compButtonClickedName);
-        stackView_default._configCompBlock();
-        heightsView_default._displayHeight();
+        configActiveStateComp(compButtonClickedName);
+        stackView_default.configCompBlock();
+        heightsView_default.displayHeight();
         optionsView_default._displayOptions();
         break;
     }
   };
   var controlCompClick = function(compClickedId) {
-    _setActiveStateComp(compClickedId);
-    stackView_default._setActiveCompBlock();
+    setActiveStateComp(compClickedId);
+    stackView_default.setActiveCompBlock();
   };
   var controlHeightClick = function() {
-    heightsView_default._toggleHeightModal();
+    heightsView_default.toggleHeightModal();
     View.toggleModalBlockout();
   };
   var controlHeightModal = function(heightValue) {
     heightsView_default.configHeightValue(heightValue);
-    heightsView_default._toggleHeightModal();
+    heightsView_default.toggleHeightModal();
     View.toggleModalBlockout();
   };
   var controlHeightModalBtn = function() {
-    heightsView_default._toggleHeightModal();
+    heightsView_default.toggleHeightModal();
     View.toggleModalBlockout();
   };
   var controlModalBlockout = function() {
     if (heightsView_default.isHeightModalOpen) {
-      heightsView_default._toggleHeightModal();
+      heightsView_default.toggleHeightModal();
       heightsView_default.clearHeightValue();
     }
     View.toggleModalBlockout();
@@ -469,14 +469,14 @@
     testBtn.addEventListener("click", function(e) {
       optionsView_default._displayTest();
     });
-    _setActiveStateComp("c-1");
-    stackView_default._setActiveCompBlock();
-    compButtonsView_default._addHandlerCompButtons(controlCompButtons);
-    stackView_default._addHandlerCompClick(controlCompClick);
-    View._addHandlerModalBlockout(controlModalBlockout);
-    heightsView_default._addHandlerHeightClick(controlHeightClick);
-    heightsView_default._addHandlerHeightModal(controlHeightModal);
-    heightsView_default._addHandlerHeightModalBtn(controlHeightModalBtn);
+    setActiveStateComp("c-1");
+    stackView_default.setActiveCompBlock();
+    compButtonsView_default.addHandlerCompButtons(controlCompButtons);
+    stackView_default.addHandlerCompClick(controlCompClick);
+    View.addHandlerModalBlockout(controlModalBlockout);
+    heightsView_default.addHandlerHeightClick(controlHeightClick);
+    heightsView_default.addHandlerHeightModal(controlHeightModal);
+    heightsView_default.addHandlerHeightModalBtn(controlHeightModalBtn);
   };
   init();
 })();

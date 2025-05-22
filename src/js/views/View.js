@@ -15,7 +15,7 @@ export default class View {
   static activeOptsText2;
   //_________________________________________________________________________
   //modal blackout gets click event to close any open modal and hide itself
-  static _addHandlerModalBlockout = (handler) => {
+  static addHandlerModalBlockout = (handler) => {
     this._modalBlockout.addEventListener("click", function (e) {
       const clicked = e.target.closest(".modal_blockout");
       if (!clicked) return;

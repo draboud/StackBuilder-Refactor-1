@@ -6,31 +6,31 @@ import optionsView from "./views/optionsView.js";
 import controlButtonsView from "./views/controlButtonsView.js";
 import View from "./views/View.js";
 
-console.log("BRANCH: custom-height");
+console.log("BRANCH: options-modal");
 //_________________________________________________________________________
 //comp button handler
 const controlCompButtons = function (compButtonClickedName) {
   switch (compButtonClickedName) {
     case "plus":
-      model._addStateComp();
-      stackView._addCompBlock();
-      stackView._resetCompBlockIds();
-      stackView._setActiveCompBlock();
+      model.addStateComp();
+      stackView.addCompBlock();
+      stackView.resetCompBlockIds();
+      stackView.setActiveCompBlock();
       break;
     case "minus":
-      let canRemoveComp = model._removeStateComp();
+      let canRemoveComp = model.removeStateComp();
       if (canRemoveComp) {
         //check if comp is not 'c-1' (base comp)
-        stackView._removeCompBlock();
-        model._resetAfterRemoval();
-        stackView._resetCompBlockIds();
-        stackView._setActiveCompBlock();
+        stackView.removeCompBlock();
+        model.resetAfterRemoval();
+        stackView.resetCompBlockIds();
+        stackView.setActiveCompBlock();
       }
       break;
     default:
-      model._configActiveStateComp(compButtonClickedName);
-      stackView._configCompBlock();
-      heightsView._displayHeight();
+      model.configActiveStateComp(compButtonClickedName);
+      stackView.configCompBlock();
+      heightsView.displayHeight();
       optionsView._displayOptions();
       break;
   }
@@ -38,34 +38,34 @@ const controlCompButtons = function (compButtonClickedName) {
 //_________________________________________________________________________
 //comp block handler
 const controlCompClick = function (compClickedId) {
-  model._setActiveStateComp(compClickedId);
-  stackView._setActiveCompBlock();
+  model.setActiveStateComp(compClickedId);
+  stackView.setActiveCompBlock();
 };
 //_________________________________________________________________________
 //reveal height modal
 const controlHeightClick = function () {
   // heightsView._revealHeightModal();
-  heightsView._toggleHeightModal();
+  heightsView.toggleHeightModal();
   View.toggleModalBlockout();
 };
 //_________________________________________________________________________
 //hide height modal, height value entered
 const controlHeightModal = function (heightValue) {
   heightsView.configHeightValue(heightValue);
-  heightsView._toggleHeightModal();
+  heightsView.toggleHeightModal();
   View.toggleModalBlockout();
 };
 //_________________________________________________________________________
 //hide height modal, no height value entered
 const controlHeightModalBtn = function () {
-  heightsView._toggleHeightModal();
+  heightsView.toggleHeightModal();
   View.toggleModalBlockout();
 };
 //_________________________________________________________________________
 //toggle blockout and close any open modals
 const controlModalBlockout = function () {
   if (heightsView.isHeightModalOpen) {
-    heightsView._toggleHeightModal();
+    heightsView.toggleHeightModal();
     heightsView.clearHeightValue();
   }
   View.toggleModalBlockout();
@@ -88,14 +88,14 @@ const init = function () {
   //..................................................................
 
   //start with base comp block active and fed into model.state, then activate base comp block
-  model._setActiveStateComp("c-1");
-  stackView._setActiveCompBlock();
+  model.setActiveStateComp("c-1");
+  stackView.setActiveCompBlock();
   //set handler functions
-  compButtonsView._addHandlerCompButtons(controlCompButtons);
-  stackView._addHandlerCompClick(controlCompClick);
-  View._addHandlerModalBlockout(controlModalBlockout);
-  heightsView._addHandlerHeightClick(controlHeightClick);
-  heightsView._addHandlerHeightModal(controlHeightModal);
-  heightsView._addHandlerHeightModalBtn(controlHeightModalBtn);
+  compButtonsView.addHandlerCompButtons(controlCompButtons);
+  stackView.addHandlerCompClick(controlCompClick);
+  View.addHandlerModalBlockout(controlModalBlockout);
+  heightsView.addHandlerHeightClick(controlHeightClick);
+  heightsView.addHandlerHeightModal(controlHeightModal);
+  heightsView.addHandlerHeightModalBtn(controlHeightModalBtn);
 };
 init();

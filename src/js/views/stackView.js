@@ -10,7 +10,7 @@ class stackView extends View {
   _parentElement = document.querySelector(".comp-wrapper");
 
   //click events for all comp blocks
-  _addHandlerCompClick(handler) {
+  addHandlerCompClick(handler) {
     this._parentElement.addEventListener("click", function (e) {
       const compClicked = e.target.closest(".comp-div");
       if (!compClicked) return;
@@ -19,7 +19,7 @@ class stackView extends View {
   }
   //_________________________________________________________________________
   //add active class to comp block via state's active id
-  _setActiveCompBlock() {
+  setActiveCompBlock() {
     this._retarget(ACTIVE_STATE_COMP);
     this._retarget(ACTIVE_COMP_BLOCK);
     document.querySelectorAll(".comp-div").forEach((el) => {
@@ -29,7 +29,7 @@ class stackView extends View {
   }
   //_________________________________________________________________________
   //loops forwards through state array, backwards through comp blocks to keep id-1 at bottom
-  _resetCompBlockIds() {
+  resetCompBlockIds() {
     this._retarget(ALL_COMP_BLOCKS);
     const stateDataArray = this._data.stateCompsArray; //these vars to use 'this' in for loop
     const allCompBlocks = View.allCompBlocks;
@@ -39,14 +39,14 @@ class stackView extends View {
   }
   //_________________________________________________________________________
   //set active comp's image via state's active id
-  _configCompBlock() {
+  configCompBlock() {
     this._retarget(ALL_COMP_BLOCKS);
     View.activeCompBlock.querySelector(".img").srcset =
       View.activeStateComp.image;
   }
   //_________________________________________________________________________
   //add comp block via state's active id
-  _addCompBlock() {
+  addCompBlock() {
     this._retarget(ACTIVE_STATE_COMP);
     View.activeCompBlock.insertAdjacentHTML(
       "beforebegin",
@@ -55,7 +55,7 @@ class stackView extends View {
   }
   //_________________________________________________________________________
   //add comp block via state's active id
-  _removeCompBlock() {
+  removeCompBlock() {
     View.activeCompBlock.parentNode.removeChild(View.activeCompBlock);
   }
   //_________________________________________________________________________

@@ -16,7 +16,7 @@ class heightsView extends View {
 
   //_________________________________________________________________________
   //click events for height div
-  _addHandlerHeightClick(handler) {
+  addHandlerHeightClick(handler) {
     this._parentElement.addEventListener("click", function (e) {
       const clicked = e.target.closest(".height-div");
       if (!clicked) return;
@@ -25,7 +25,7 @@ class heightsView extends View {
   }
   //_________________________________________________________________________
   //enter height - arrow function for 'this' to access global fields
-  _addHandlerHeightModal(handler) {
+  addHandlerHeightModal(handler) {
     this._heightForm.addEventListener("submit", (e) => {
       e.preventDefault();
       handler(this._heightInput.value);
@@ -34,7 +34,7 @@ class heightsView extends View {
   }
   //_________________________________________________________________________
   //close height modal- arrow function for 'this' to access global fields
-  _addHandlerHeightModalBtn(handler) {
+  addHandlerHeightModalBtn(handler) {
     this._heightModal.addEventListener("click", (e) => {
       const clicked = e.target.closest(".modal_close_button");
       if (!clicked) return;
@@ -44,7 +44,7 @@ class heightsView extends View {
   }
   //_________________________________________________________________________
   //open/close height modal
-  _toggleHeightModal() {
+  toggleHeightModal() {
     this._heightModal.classList.toggle("hide");
     if (this._heightModal.classList.contains("hide")) {
       this.isHeightModalOpen = false;
@@ -55,7 +55,7 @@ class heightsView extends View {
   }
   //_________________________________________________________________________
   //reveal height div
-  _displayHeight = function () {
+  displayHeight = function () {
     this._retarget(ACTIVE_HEIGHT_DIV);
     View.activeHeightText.innerHTML = View.activeStateComp.height;
     View.activeHeightDiv.classList.remove("hide");

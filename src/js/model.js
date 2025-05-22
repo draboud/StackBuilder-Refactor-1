@@ -32,7 +32,7 @@ export let state = {
 };
 //_________________________________________________________________________
 //function description
-export const _setActiveStateComp = function (id) {
+export const setActiveStateComp = function (id) {
   state.stateCompsArray.forEach((el) => {
     el.active = false;
   });
@@ -43,7 +43,7 @@ export const _setActiveStateComp = function (id) {
 };
 //_________________________________________________________________________
 //function description
-export const _configActiveStateComp = function (compType) {
+export const configActiveStateComp = function (compType) {
   state.activeCompType = compType;
   _activeStateComp.height = COMP_HEIGHTS[compType];
   _activeStateComp.image = COMP_IMG[compType];
@@ -58,7 +58,7 @@ export const _configActiveStateComp = function (compType) {
 };
 //_________________________________________________________________________
 //function description
-export const _resetStateCompIds = function () {
+export const resetStateCompIds = function () {
   let counter = 1;
   for (let i = 0; i < state.stateCompsArray.length; i++) {
     if (state.stateCompsArray[i].id === "new") state.activeId = `c-${counter}`;
@@ -68,7 +68,7 @@ export const _resetStateCompIds = function () {
 };
 //_________________________________________________________________________
 //function description
-export const _addStateComp = function () {
+export const addStateComp = function () {
   const newStateComp = {
     active: false,
     id: "new",
@@ -84,12 +84,12 @@ export const _addStateComp = function () {
     },
   };
   state.stateCompsArray.splice(_activeIndex + 1, 0, newStateComp);
-  _resetStateCompIds();
-  _setActiveStateComp(state.activeId);
+  resetStateCompIds();
+  setActiveStateComp(state.activeId);
 };
 //_________________________________________________________________________
 //after removal, stackView updates UI then reset is called to update new active comp
-export const _removeStateComp = function () {
+export const removeStateComp = function () {
   if (_activeStateComp.id != "c-1") {
     state.stateCompsArray.splice(_activeIndex, 1);
     return true;
@@ -100,9 +100,9 @@ export const _removeStateComp = function () {
 };
 //_________________________________________________________________________
 //called after stackView updates the UI from initial removal
-export const _resetAfterRemoval = function () {
-  _setActiveStateComp(state.stateCompsArray[_activeIndex - 1].id);
-  _resetStateCompIds();
+export const resetAfterRemoval = function () {
+  setActiveStateComp(state.stateCompsArray[_activeIndex - 1].id);
+  resetStateCompIds();
 };
 //_________________________________________________________________________
 //function description
