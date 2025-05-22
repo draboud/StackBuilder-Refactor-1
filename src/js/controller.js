@@ -75,9 +75,11 @@ const controlModalBlockout = function () {
   View.toggleModalBlockout();
 };
 //_________________________________________________________________________
-//description
+//when user clicks options button beside comp to open opts modal
 const controlOptsClick = function (optClicked) {
-  console.log(optClicked.classList.contains("second"));
+  console.log(
+    "this option is second (double): " + optClicked.classList.contains("second")
+  );
   optionsView.toggleOptsModal();
   View.toggleModalBlockout();
 };
@@ -88,9 +90,11 @@ const controlOptsModalBtn = function () {
   View.toggleModalBlockout();
 };
 //_________________________________________________________________________
-//description
+//when user clicks an option in the options modal
 const controlOptsModalOpts = function (clickedOpt) {
-  console.log(clickedOpt.firstChild.innerHTML);
+  console.log(
+    clickedOpt.parentElement.querySelector(".category_div").firstChild.innerHTML
+  );
   clickedOpt.firstChild.classList.add("selected");
 };
 //_________________________________________________________________________

@@ -523,7 +523,9 @@
     View.toggleModalBlockout();
   };
   var controlOptsClick = function(optClicked) {
-    console.log(optClicked.classList.contains("second"));
+    console.log(
+      "this option is second (double): " + optClicked.classList.contains("second")
+    );
     optionsView_default.toggleOptsModal();
     View.toggleModalBlockout();
   };
@@ -532,7 +534,9 @@
     View.toggleModalBlockout();
   };
   var controlOptsModalOpts = function(clickedOpt) {
-    console.log(clickedOpt.firstChild.innerHTML);
+    console.log(
+      clickedOpt.parentElement.querySelector(".category_div").firstChild.innerHTML
+    );
     clickedOpt.firstChild.classList.add("selected");
   };
   var controlReviseBtn = function() {
