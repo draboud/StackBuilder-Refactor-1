@@ -31,7 +31,7 @@ const controlCompButtons = function (compButtonClickedName) {
       model.configActiveStateComp(compButtonClickedName);
       stackView.configCompBlock();
       heightsView.displayHeight();
-      optionsView._displayOptions();
+      optionsView.displayOptions();
       break;
   }
 };
@@ -44,7 +44,6 @@ const controlCompClick = function (compClickedId) {
 //_________________________________________________________________________
 //reveal height modal
 const controlHeightClick = function () {
-  // heightsView._revealHeightModal();
   heightsView.toggleHeightModal();
   View.toggleModalBlockout();
 };
@@ -83,7 +82,7 @@ const init = function () {
     //   console.log(el);
     // });
     //........................................
-    optionsView._displayTest();
+    optionsView.displayTest();
   });
   //..................................................................
 

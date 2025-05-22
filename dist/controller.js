@@ -382,7 +382,7 @@
 
   // src/js/views/optionsView.js
   var optionsView = class extends View {
-    _displayOptions = function() {
+    displayOptions = function() {
       this._retarget(ACTIVE_OPTS_DIV);
       this._retarget(ACTIVE_OPTS_TEXT_1);
       this._retarget(ACTIVE_OPTS_TEXT_2);
@@ -398,7 +398,7 @@
       View.activeOptsText1.innerHTML = View.activeStateComp.options["default"];
       View.activeOptsDiv.classList.remove("hide");
     };
-    _displayTest = function() {
+    displayTest = function() {
     };
   };
   var optionsView_default = new optionsView();
@@ -436,7 +436,7 @@
         configActiveStateComp(compButtonClickedName);
         stackView_default.configCompBlock();
         heightsView_default.displayHeight();
-        optionsView_default._displayOptions();
+        optionsView_default.displayOptions();
         break;
     }
   };
@@ -467,7 +467,7 @@
   var init = function() {
     const testBtn = document.querySelector(".test_button");
     testBtn.addEventListener("click", function(e) {
-      optionsView_default._displayTest();
+      optionsView_default.displayTest();
     });
     setActiveStateComp("c-1");
     stackView_default.setActiveCompBlock();

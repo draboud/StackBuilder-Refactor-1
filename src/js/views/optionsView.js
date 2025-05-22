@@ -7,7 +7,7 @@ import {
 import View from "./View";
 
 class optionsView extends View {
-  _displayOptions = function () {
+  displayOptions = function () {
     this._retarget(ACTIVE_OPTS_DIV);
     this._retarget(ACTIVE_OPTS_TEXT_1);
     this._retarget(ACTIVE_OPTS_TEXT_2);
@@ -24,6 +24,6 @@ class optionsView extends View {
     View.activeOptsText1.innerHTML = View.activeStateComp.options["default"];
     View.activeOptsDiv.classList.remove("hide");
   };
-  _displayTest = function () {};
+  displayTest = function () {};
 }
 export default new optionsView();
