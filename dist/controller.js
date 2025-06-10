@@ -468,6 +468,7 @@
   var controlButtonsView_default = new controlButtonsView();
 
   // src/js/controller.js
+  console.log("BRANCH: options-modal - June 10, 2025");
   var controlCompButtons = function(compButtonClickedName) {
     switch (compButtonClickedName) {
       case "plus":
