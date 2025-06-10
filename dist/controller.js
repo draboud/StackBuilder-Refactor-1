@@ -71,6 +71,8 @@
   var ALL_COMP_BLOCKS = "allCompBlocks";
   var ACTIVE_HEIGHT_DIV = "activeHeightDiv";
   var ACTIVE_OPTS_DIV = "activeOptsDiv";
+  var ALL_BORE_OPTS = "allBoreOpts";
+  var ALL_PRESS_OPTS = "allPressOpts";
 
   // src/js/model.js
   var _activeStateComp;
@@ -193,6 +195,8 @@
     static activeOptsText1;
     static activeOptsSpacer;
     static activeOptsText2;
+    static allBoreOpts;
+    static allPressOpts;
     //_________________________________________________________________________
     //modal blackout gets click event to close any open modal and hide itself
     static addHandlerModalBlockout = (handler) => {
@@ -233,6 +237,16 @@
           _View.activeOptsText1 = _View.activeOptsDiv.querySelector(".opts-text");
           _View.activeOptsSpacer = _View.activeOptsDiv.querySelector(".opts-spacer");
           _View.activeOptsText2 = _View.activeOptsDiv.querySelector(".opts-text.second");
+          break;
+        case "allBoreOpts":
+          _View.allBoreOpts = [
+            ...document.querySelector(".modal_column.bore").querySelectorAll(".opt_div")
+          ];
+          break;
+        case "allPressOpts":
+          _View.allPressOpts = [
+            ...document.querySelector(".modal_column.press").querySelectorAll(".opt_div")
+          ];
           break;
       }
     };
@@ -451,13 +465,9 @@
     //_________________________________________________________________________
     //closes opts modal and sets active comp's options to those selected
     setSelectedOpts = function() {
-      const allBoreOptsText = [
-        ...document.querySelector(".modal_column.bore").querySelectorAll(".opt_div")
-      ];
-      const allPressOptsText = [
-        ...document.querySelector(".modal_column.press").querySelectorAll(".opt_div")
-      ];
-      const allOptsText = [allBoreOptsText, allPressOptsText];
+      this.retarget(ALL_BORE_OPTS);
+      this.retarget(ALL_PRESS_OPTS);
+      const allOptsText = [View.allBoreOpts, View.allPressOpts];
       if (allOptsText.every(
         (el) => el.find((el2) => el2.classList.contains("selected"))
       )) {

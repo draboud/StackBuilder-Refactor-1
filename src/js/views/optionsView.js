@@ -1,4 +1,4 @@
-import { ACTIVE_OPTS_DIV } from "../config";
+import { ACTIVE_OPTS_DIV, ALL_BORE_OPTS, ALL_PRESS_OPTS } from "../config";
 import View from "./View";
 
 class optionsView extends View {
@@ -70,18 +70,9 @@ class optionsView extends View {
   //_________________________________________________________________________
   //closes opts modal and sets active comp's options to those selected
   setSelectedOpts = function () {
-    const allBoreOptsText = [
-      ...document
-        .querySelector(".modal_column.bore")
-        .querySelectorAll(".opt_div"),
-    ];
-    const allPressOptsText = [
-      ...document
-        .querySelector(".modal_column.press")
-        .querySelectorAll(".opt_div"),
-    ];
-    const allOptsText = [allBoreOptsText, allPressOptsText];
-
+    this.retarget(ALL_BORE_OPTS);
+    this.retarget(ALL_PRESS_OPTS);
+    const allOptsText = [View.allBoreOpts, View.allPressOpts];
     if (
       allOptsText.every((el) =>
         el.find((el2) => el2.classList.contains("selected"))

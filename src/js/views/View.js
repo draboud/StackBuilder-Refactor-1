@@ -13,6 +13,8 @@ export default class View {
   static activeOptsText1;
   static activeOptsSpacer;
   static activeOptsText2;
+  static allBoreOpts;
+  static allPressOpts;
   //_________________________________________________________________________
   //modal blackout gets click event to close any open modal and hide itself
   static addHandlerModalBlockout = (handler) => {
@@ -57,6 +59,20 @@ export default class View {
           View.activeOptsDiv.querySelector(".opts-spacer");
         View.activeOptsText2 =
           View.activeOptsDiv.querySelector(".opts-text.second");
+        break;
+      case "allBoreOpts":
+        View.allBoreOpts = [
+          ...document
+            .querySelector(".modal_column.bore")
+            .querySelectorAll(".opt_div"),
+        ];
+        break;
+      case "allPressOpts":
+        View.allPressOpts = [
+          ...document
+            .querySelector(".modal_column.press")
+            .querySelectorAll(".opt_div"),
+        ];
         break;
     }
   };

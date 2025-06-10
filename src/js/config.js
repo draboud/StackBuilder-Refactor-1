@@ -170,3 +170,5 @@ export const ACTIVE_OPTS_DIV = "activeOptsDiv";
 export const ACTIVE_OPTS_TEXT_1 = "activeOptsText1";
 export const ACTIVE_OPTS_TEXT_2 = "activeOptsText2";
 export const ACTIVE_OPTS_SPACER = "activeOptsSpacer";
+export const ALL_BORE_OPTS = "allBoreOpts";
+export const ALL_PRESS_OPTS = "allPressOpts";
