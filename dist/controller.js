@@ -290,7 +290,6 @@
     //_________________________________________________________________________
     //set active comp's image via state's active id
     configCompBlock() {
-      this.retarget(ALL_COMP_BLOCKS);
       View.activeCompBlock.querySelector(".img").srcset = View.activeStateComp.image;
     }
     //_________________________________________________________________________
@@ -443,6 +442,44 @@
       View.activeOptsDiv.classList.remove("hide");
     };
     //_________________________________________________________________________
+    //set only the option that was clicked to active 'selected' state
+    setActiveOpt = function(clickedOpt) {
+      this.clearActiveOpts(clickedOpt);
+      clickedOpt.classList.add("selected");
+      this.setSelectedOpts();
+    };
+    //_________________________________________________________________________
+    //closes opts modal and sets active comp's options to those selected
+    setSelectedOpts = function() {
+      const allBoreOptsText = [
+        ...document.querySelector(".modal_column.bore").querySelectorAll(".opt_div")
+      ];
+      const allPressOptsText = [
+        ...document.querySelector(".modal_column.press").querySelectorAll(".opt_div")
+      ];
+      const allOptsText = [allBoreOptsText, allPressOptsText];
+      if (allOptsText.every(
+        (el) => el.find((el2) => el2.classList.contains("selected"))
+      )) {
+        console.log("success!");
+      }
+    };
+    //_________________________________________________________________________
+    //resets all options to unselected status
+    clearActiveOpts = function(clickedOpt) {
+      if (clickedOpt) {
+        const allOptsInColumn = clickedOpt.parentElement.querySelectorAll(".opt_div");
+        allOptsInColumn.forEach((el) => {
+          el.classList.remove("selected");
+        });
+      } else {
+        const allOpts = document.querySelectorAll(".opt_div");
+        allOpts.forEach((el) => {
+          el.classList.remove("selected");
+        });
+      }
+    };
+    //_________________________________________________________________________
     //description
     toggleOptsModal = function() {
       this._optsModal.classList.toggle("hide");
@@ -451,6 +488,7 @@
       } else {
         this.isOptsModalOpen = true;
       }
+      this.clearActiveOpts();
     };
     //_________________________________________________________________________
     //description
@@ -538,7 +576,7 @@
     console.log(
       clickedOpt.parentElement.querySelector(".category_div").firstChild.innerHTML
     );
-    clickedOpt.firstChild.classList.add("selected");
+    optionsView_default.setActiveOpt(clickedOpt);
   };
   var controlReviseBtn = function() {
     console.log("revise button pressed");

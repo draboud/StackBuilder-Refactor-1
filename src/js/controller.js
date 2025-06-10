@@ -95,7 +95,7 @@ const controlOptsModalOpts = function (clickedOpt) {
   console.log(
     clickedOpt.parentElement.querySelector(".category_div").firstChild.innerHTML
   );
-  clickedOpt.firstChild.classList.add("selected");
+  optionsView.setActiveOpt(clickedOpt);
 };
 //_________________________________________________________________________
 //description
