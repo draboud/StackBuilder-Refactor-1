@@ -61,10 +61,10 @@ class optionsView extends View {
     View.activeOptsDiv.classList.remove("hide");
   };
   //_________________________________________________________________________
-  //set only the option that was clicked to active 'selected' state
-  setActiveOpt = function (clickedOpt) {
-    this.clearActiveOpts(clickedOpt);
-    clickedOpt.classList.add("selected");
+  //set only the modal option that was clicked to active 'selected' state
+  setActiveOpt = function (clickedOptFromModal) {
+    this.clearActiveOpts(clickedOptFromModal);
+    clickedOptFromModal.classList.add("selected");
     this.setSelectedOpts();
   };
   //_________________________________________________________________________
@@ -78,15 +78,28 @@ class optionsView extends View {
         el.find((el2) => el2.classList.contains("selected"))
       )
     ) {
-      console.log("success!");
+      this.setCompOptText();
     }
   };
   //_________________________________________________________________________
+  //set formatted options output for each comp parameter (bore/type/range/press)
+  setCompOptText = function () {
+    const boreText = View.allBoreOpts.find((el) =>
+      el.classList.contains("selected")
+    ).childNodes[0].innerHTML;
+    const pressText = View.allPressOpts.find((el) =>
+      el.classList.contains("selected")
+    ).childNodes[0].innerHTML;
+    View.activeOptsDiv.childNodes[0].innerHTML =
+      boreText + "&nbsp;" + pressText;
+    this.toggleOptsModal();
+  };
+  //_________________________________________________________________________
   //resets all options to unselected status
-  clearActiveOpts = function (clickedOpt) {
-    if (clickedOpt) {
+  clearActiveOpts = function (clickedOptFromModal) {
+    if (clickedOptFromModal) {
       const allOptsInColumn =
-        clickedOpt.parentElement.querySelectorAll(".opt_div");
+        clickedOptFromModal.parentElement.querySelectorAll(".opt_div");
       allOptsInColumn.forEach((el) => {
         el.classList.remove("selected");
       });
@@ -101,6 +114,7 @@ class optionsView extends View {
   //description
   toggleOptsModal = function () {
     this._optsModal.classList.toggle("hide");
+    View.toggleModalBlockout();
     if (this._optsModal.classList.contains("hide")) {
       this.isOptsModalOpen = false;
     } else {

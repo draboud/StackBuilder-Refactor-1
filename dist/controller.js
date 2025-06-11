@@ -456,10 +456,10 @@
       View.activeOptsDiv.classList.remove("hide");
     };
     //_________________________________________________________________________
-    //set only the option that was clicked to active 'selected' state
-    setActiveOpt = function(clickedOpt) {
-      this.clearActiveOpts(clickedOpt);
-      clickedOpt.classList.add("selected");
+    //set only the modal option that was clicked to active 'selected' state
+    setActiveOpt = function(clickedOptFromModal) {
+      this.clearActiveOpts(clickedOptFromModal);
+      clickedOptFromModal.classList.add("selected");
       this.setSelectedOpts();
     };
     //_________________________________________________________________________
@@ -471,14 +471,26 @@
       if (allOptsText.every(
         (el) => el.find((el2) => el2.classList.contains("selected"))
       )) {
-        console.log("success!");
+        this.setCompOptText();
       }
     };
     //_________________________________________________________________________
+    //set formatted options output for each comp parameter (bore/type/range/press)
+    setCompOptText = function() {
+      const boreText = View.allBoreOpts.find(
+        (el) => el.classList.contains("selected")
+      ).childNodes[0].innerHTML;
+      const pressText = View.allPressOpts.find(
+        (el) => el.classList.contains("selected")
+      ).childNodes[0].innerHTML;
+      View.activeOptsDiv.childNodes[0].innerHTML = boreText + "&nbsp;" + pressText;
+      this.toggleOptsModal();
+    };
+    //_________________________________________________________________________
     //resets all options to unselected status
-    clearActiveOpts = function(clickedOpt) {
-      if (clickedOpt) {
-        const allOptsInColumn = clickedOpt.parentElement.querySelectorAll(".opt_div");
+    clearActiveOpts = function(clickedOptFromModal) {
+      if (clickedOptFromModal) {
+        const allOptsInColumn = clickedOptFromModal.parentElement.querySelectorAll(".opt_div");
         allOptsInColumn.forEach((el) => {
           el.classList.remove("selected");
         });
@@ -493,6 +505,7 @@
     //description
     toggleOptsModal = function() {
       this._optsModal.classList.toggle("hide");
+      View.toggleModalBlockout();
       if (this._optsModal.classList.contains("hide")) {
         this.isOptsModalOpen = false;
       } else {
@@ -516,7 +529,6 @@
   var controlButtonsView_default = new controlButtonsView();
 
   // src/js/controller.js
-  console.log("BRANCH: options-modal - June 10, 2025");
   var controlCompButtons = function(compButtonClickedName) {
     switch (compButtonClickedName) {
       case "plus":
@@ -569,24 +581,15 @@
     if (optionsView_default.isOptsModalOpen) {
       optionsView_default.toggleOptsModal();
     }
-    View.toggleModalBlockout();
   };
   var controlOptsClick = function(optClicked) {
-    console.log(
-      "this option is second (double): " + optClicked.classList.contains("second")
-    );
     optionsView_default.toggleOptsModal();
-    View.toggleModalBlockout();
   };
   var controlOptsModalBtn = function() {
     optionsView_default.toggleOptsModal();
-    View.toggleModalBlockout();
   };
-  var controlOptsModalOpts = function(clickedOpt) {
-    console.log(
-      clickedOpt.parentElement.querySelector(".category_div").firstChild.innerHTML
-    );
-    optionsView_default.setActiveOpt(clickedOpt);
+  var controlOptsModalOpts = function(clickedOptFromModal) {
+    optionsView_default.setActiveOpt(clickedOptFromModal);
   };
   var controlReviseBtn = function() {
     console.log("revise button pressed");

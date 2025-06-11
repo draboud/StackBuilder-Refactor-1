@@ -6,7 +6,7 @@ import optionsView from "./views/optionsView.js";
 import controlButtonsView from "./views/controlButtonsView.js";
 import View from "./views/View.js";
 
-console.log("BRANCH: options-modal - June 10, 2025");
+// console.log("BRANCH: options-modal - June 10, 2025");
 //_________________________________________________________________________
 //comp button handler
 const controlCompButtons = function (compButtonClickedName) {
@@ -72,30 +72,21 @@ const controlModalBlockout = function () {
   if (optionsView.isOptsModalOpen) {
     optionsView.toggleOptsModal();
   }
-  View.toggleModalBlockout();
 };
 //_________________________________________________________________________
 //when user clicks options button beside comp to open opts modal
 const controlOptsClick = function (optClicked) {
-  console.log(
-    "this option is second (double): " + optClicked.classList.contains("second")
-  );
   optionsView.toggleOptsModal();
-  View.toggleModalBlockout();
 };
 //_________________________________________________________________________
 //description
 const controlOptsModalBtn = function () {
   optionsView.toggleOptsModal();
-  View.toggleModalBlockout();
 };
 //_________________________________________________________________________
 //when user clicks an option in the options modal
-const controlOptsModalOpts = function (clickedOpt) {
-  console.log(
-    clickedOpt.parentElement.querySelector(".category_div").firstChild.innerHTML
-  );
-  optionsView.setActiveOpt(clickedOpt);
+const controlOptsModalOpts = function (clickedOptFromModal) {
+  optionsView.setActiveOpt(clickedOptFromModal);
 };
 //_________________________________________________________________________
 //description
