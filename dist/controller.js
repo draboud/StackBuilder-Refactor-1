@@ -402,7 +402,7 @@
     isOptsModalOpen;
     //_________________________________________________________________________
     //description
-    addHandlerOptsClick = function(handler) {
+    addHandlerOptionsClick = function(handler) {
       this._parentElement.addEventListener("click", function(e) {
         const clicked = e.target.closest(".opts-text");
         if (!clicked) return;
@@ -411,7 +411,7 @@
     };
     //_________________________________________________________________________
     //description
-    addHandlerOptsModalBtn = function(handler) {
+    addHandlerOptsModalCloseBtn = function(handler) {
       this._optsModal.addEventListener("click", (e) => {
         const clicked = e.target.closest(".modal_close_button");
         if (!clicked) return;
@@ -420,7 +420,7 @@
     };
     //_________________________________________________________________________
     //description
-    addHandlerOptsModalOpts = function(handler) {
+    addHandlerOptsModalOpt = function(handler) {
       this._optsModal.addEventListener("click", (e) => {
         const clicked = e.target.closest(".opt_div");
         if (!clicked) return;
@@ -502,7 +502,7 @@
       }
     };
     //_________________________________________________________________________
-    //description
+    //opens options modal, shows type+range if comp is single/double
     toggleOptsModal = function() {
       this._optsModal.classList.toggle("hide");
       View.toggleModalBlockout();
@@ -510,6 +510,13 @@
         this.isOptsModalOpen = false;
       } else {
         this.isOptsModalOpen = true;
+        if (View.activeCompType === "single" || View.activeCompType === "double") {
+          this._optsModal.querySelector(".modal_column.type").classList.remove("hide");
+          this._optsModal.querySelector(".modal_column.range").classList.remove("hide");
+        } else {
+          this._optsModal.querySelector(".modal_column.type").classList.add("hide");
+          this._optsModal.querySelector(".modal_column.range").classList.add("hide");
+        }
       }
       this.clearActiveOpts();
     };
@@ -529,7 +536,6 @@
   var controlButtonsView_default = new controlButtonsView();
 
   // src/js/controller.js
-  console.log("BRANCH: options-modal: single and double");
   var controlCompButtons = function(compButtonClickedName) {
     switch (compButtonClickedName) {
       case "plus":
@@ -583,13 +589,16 @@
       optionsView_default.toggleOptsModal();
     }
   };
-  var controlOptsClick = function(optClicked) {
+  var controlOptionsClick = function(optClicked) {
+    optionsView_default.toggleOptsModal();
+    if (optClicked.classList.contains("second")) {
+      console.log("contains second");
+    }
+  };
+  var controlOptsModalCloseBtn = function() {
     optionsView_default.toggleOptsModal();
   };
-  var controlOptsModalBtn = function() {
-    optionsView_default.toggleOptsModal();
-  };
-  var controlOptsModalOpts = function(clickedOptFromModal) {
+  var controlOptsModalOpt = function(clickedOptFromModal) {
     optionsView_default.setActiveOpt(clickedOptFromModal);
   };
   var controlReviseBtn = function() {
@@ -612,9 +621,9 @@
     heightsView_default.addHandlerHeightClick(controlHeightClick);
     heightsView_default.addHandlerHeightForm(controlHeightForm);
     heightsView_default.addHandlerHeightModalBtn(controlHeightModalBtn);
-    optionsView_default.addHandlerOptsClick(controlOptsClick);
-    optionsView_default.addHandlerOptsModalBtn(controlOptsModalBtn);
-    optionsView_default.addHandlerOptsModalOpts(controlOptsModalOpts);
+    optionsView_default.addHandlerOptionsClick(controlOptionsClick);
+    optionsView_default.addHandlerOptsModalCloseBtn(controlOptsModalCloseBtn);
+    optionsView_default.addHandlerOptsModalOpt(controlOptsModalOpt);
     optionsView_default.addHandlerReviseBtn(controlReviseBtn);
   };
   init();

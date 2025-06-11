@@ -6,7 +6,7 @@ import optionsView from "./views/optionsView.js";
 import controlButtonsView from "./views/controlButtonsView.js";
 import View from "./views/View.js";
 
-console.log("BRANCH: options-modal: single and double");
+// console.log("BRANCH: options-modal: single and double");
 //_________________________________________________________________________
 //comp button handler
 const controlCompButtons = function (compButtonClickedName) {
@@ -74,18 +74,21 @@ const controlModalBlockout = function () {
   }
 };
 //_________________________________________________________________________
-//when user clicks options button beside comp to open opts modal
-const controlOptsClick = function (optClicked) {
+//user clicks 'options' beside comp to open opts modal (detects 'second')
+const controlOptionsClick = function (optClicked) {
   optionsView.toggleOptsModal();
+  if (optClicked.classList.contains("second")) {
+    console.log("contains second");
+  }
 };
 //_________________________________________________________________________
 //description
-const controlOptsModalBtn = function () {
+const controlOptsModalCloseBtn = function () {
   optionsView.toggleOptsModal();
 };
 //_________________________________________________________________________
 //when user clicks an option in the options modal
-const controlOptsModalOpts = function (clickedOptFromModal) {
+const controlOptsModalOpt = function (clickedOptFromModal) {
   optionsView.setActiveOpt(clickedOptFromModal);
 };
 //_________________________________________________________________________
@@ -119,9 +122,9 @@ const init = function () {
   heightsView.addHandlerHeightClick(controlHeightClick);
   heightsView.addHandlerHeightForm(controlHeightForm);
   heightsView.addHandlerHeightModalBtn(controlHeightModalBtn);
-  optionsView.addHandlerOptsClick(controlOptsClick);
-  optionsView.addHandlerOptsModalBtn(controlOptsModalBtn);
-  optionsView.addHandlerOptsModalOpts(controlOptsModalOpts);
+  optionsView.addHandlerOptionsClick(controlOptionsClick);
+  optionsView.addHandlerOptsModalCloseBtn(controlOptsModalCloseBtn);
+  optionsView.addHandlerOptsModalOpt(controlOptsModalOpt);
   optionsView.addHandlerReviseBtn(controlReviseBtn);
 };
 init();

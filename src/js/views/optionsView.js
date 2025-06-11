@@ -8,7 +8,7 @@ class optionsView extends View {
 
   //_________________________________________________________________________
   //description
-  addHandlerOptsClick = function (handler) {
+  addHandlerOptionsClick = function (handler) {
     this._parentElement.addEventListener("click", function (e) {
       const clicked = e.target.closest(".opts-text");
       if (!clicked) return;
@@ -17,7 +17,7 @@ class optionsView extends View {
   };
   //_________________________________________________________________________
   //description
-  addHandlerOptsModalBtn = function (handler) {
+  addHandlerOptsModalCloseBtn = function (handler) {
     this._optsModal.addEventListener("click", (e) => {
       const clicked = e.target.closest(".modal_close_button");
       if (!clicked) return;
@@ -26,7 +26,7 @@ class optionsView extends View {
   };
   //_________________________________________________________________________
   //description
-  addHandlerOptsModalOpts = function (handler) {
+  addHandlerOptsModalOpt = function (handler) {
     this._optsModal.addEventListener("click", (e) => {
       const clicked = e.target.closest(".opt_div");
       if (!clicked) return;
@@ -111,7 +111,7 @@ class optionsView extends View {
     }
   };
   //_________________________________________________________________________
-  //description
+  //opens options modal, shows type+range if comp is single/double
   toggleOptsModal = function () {
     this._optsModal.classList.toggle("hide");
     View.toggleModalBlockout();
@@ -119,6 +119,24 @@ class optionsView extends View {
       this.isOptsModalOpen = false;
     } else {
       this.isOptsModalOpen = true;
+      if (
+        View.activeCompType === "single" ||
+        View.activeCompType === "double"
+      ) {
+        this._optsModal
+          .querySelector(".modal_column.type")
+          .classList.remove("hide");
+        this._optsModal
+          .querySelector(".modal_column.range")
+          .classList.remove("hide");
+      } else {
+        this._optsModal
+          .querySelector(".modal_column.type")
+          .classList.add("hide");
+        this._optsModal
+          .querySelector(".modal_column.range")
+          .classList.add("hide");
+      }
     }
     this.clearActiveOpts();
   };
