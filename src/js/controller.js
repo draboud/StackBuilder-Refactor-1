@@ -6,7 +6,7 @@ import optionsView from "./views/optionsView.js";
 import controlButtonsView from "./views/controlButtonsView.js";
 import View from "./views/View.js";
 
-// console.log("BRANCH: options-modal - June 10, 2025");
+console.log("BRANCH: options-modal: single and double");
 //_________________________________________________________________________
 //comp button handler
 const controlCompButtons = function (compButtonClickedName) {

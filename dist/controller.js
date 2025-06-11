@@ -529,6 +529,7 @@
   var controlButtonsView_default = new controlButtonsView();
 
   // src/js/controller.js
+  console.log("BRANCH: options-modal: single and double");
   var controlCompButtons = function(compButtonClickedName) {
     switch (compButtonClickedName) {
       case "plus":
