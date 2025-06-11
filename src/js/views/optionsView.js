@@ -90,7 +90,7 @@ class optionsView extends View {
     const pressText = View.allPressOpts.find((el) =>
       el.classList.contains("selected")
     ).childNodes[0].innerHTML;
-    View.activeOptsDiv.childNodes[0].innerHTML =
+    View.activeOptsDiv.querySelector(".opts-text").innerHTML =
       boreText + "&nbsp;" + pressText;
     this.toggleOptsModal();
   };

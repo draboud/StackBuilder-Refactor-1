@@ -483,7 +483,7 @@
       const pressText = View.allPressOpts.find(
         (el) => el.classList.contains("selected")
       ).childNodes[0].innerHTML;
-      View.activeOptsDiv.childNodes[0].innerHTML = boreText + "&nbsp;" + pressText;
+      View.activeOptsDiv.querySelector(".opts-text").innerHTML = boreText + "&nbsp;" + pressText;
       this.toggleOptsModal();
     };
     //_________________________________________________________________________
